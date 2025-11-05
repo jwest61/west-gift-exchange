@@ -8,88 +8,114 @@
     body {
       font-family: "Segoe UI", sans-serif;
       display: flex;
+      flex-direction: row;
       min-height: 100vh;
       margin: 0;
-      background: #f5f5f5;
+      background: #f9f9f9;
+      color: #333;
     }
+
+    /* Left side pairings */
     .left {
-      width: 30%;
+      width: 35%;
       background: #fff;
       padding: 20px;
       border-right: 2px solid #ddd;
+      overflow-y: auto;
     }
+
     .left h2 {
       margin-bottom: 10px;
       color: #b30000;
     }
-    .left table {
+
+    .pairing-table {
       width: 100%;
       border-collapse: collapse;
+      margin-bottom: 20px;
     }
-    .left th, .left td {
-      padding: 8px;
+
+    .pairing-table td {
+      padding: 6px 8px;
       border-bottom: 1px solid #eee;
     }
+
+    .separator {
+      border-top: 3px solid #b30000;
+      margin: 20px 0;
+    }
+
+    /* Main content */
     .main {
       flex: 1;
       padding: 20px;
     }
+
     .tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
       justify-content: center;
+      gap: 8px;
       margin-bottom: 20px;
     }
+
     .tab {
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 20px;
-      padding: 10px 20px;
+      padding: 8px 16px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: 0.2s;
     }
+
     .tab.active {
       background: #b30000;
-      color: #fff;
+      color: white;
       font-weight: bold;
     }
+
     .gift-list {
-      margin-top: 20px;
+      margin-top: 10px;
     }
+
     .gift-item {
       background: #fff;
-      padding: 10px;
       margin-bottom: 8px;
+      padding: 10px;
       border-radius: 10px;
+      border: 1px solid #ddd;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid #ddd;
     }
+
     .gift-item button {
       background: #ff5c5c;
-      border: none;
       color: white;
-      border-radius: 8px;
+      border: none;
+      border-radius: 6px;
       padding: 4px 10px;
       cursor: pointer;
     }
+
     .add-form {
       background: #fff;
-      padding: 10px;
+      padding: 12px;
       border-radius: 10px;
       margin-top: 20px;
+      border: 1px solid #ddd;
     }
+
     input, select {
-      margin: 5px;
+      margin: 4px;
       padding: 6px;
       border: 1px solid #ccc;
       border-radius: 6px;
     }
+
     button.add {
       background: #b30000;
-      color: #fff;
+      color: white;
       border: none;
       padding: 6px 12px;
       border-radius: 8px;
@@ -98,9 +124,10 @@
   </style>
 </head>
 <body>
+
   <div class="left">
-    <h2>🎅 Gift Pairings</h2>
-    <table>
+    <h2>🎅 Group 1</h2>
+    <table class="pairing-table">
       <tr><td>Jon → Katie</td></tr>
       <tr><td>Dave → Jason</td></tr>
       <tr><td>Karen → Chelsea</td></tr>
@@ -111,6 +138,12 @@
       <tr><td>Katie → Dan</td></tr>
       <tr><td>Chelsea → Jen</td></tr>
       <tr><td>Geoff → Karen</td></tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>🎁 Group 2</h2>
+    <table class="pairing-table">
       <tr><td>Eddie → Gwen</td></tr>
       <tr><td>Gwen → Evie</td></tr>
       <tr><td>Evie → Claire</td></tr>
@@ -137,49 +170,67 @@
 
     const tabsDiv = document.getElementById("tabs");
     const contentDiv = document.getElementById("content");
-    let currentGiver = null;
+    let currentGiver = givers[0];
     let gifts = [];
 
+    // Load all gifts from Google Sheet
     async function loadGifts() {
-      const res = await fetch(SHEET_URL);
-      gifts = await res.json();
-      showGifts(currentGiver);
+      try {
+        const res = await fetch(SHEET_URL + "?t=" + Date.now()); // prevent caching
+        gifts = await res.json();
+        showGifts(currentGiver);
+      } catch (e) {
+        console.error("Error loading gifts:", e);
+      }
     }
 
+    // Add a gift
     async function addGift(giver, name, priority, price) {
-      await fetch(SHEET_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "add", Giver: giver, "Gift Name": name, Priority: priority, Price: price })
-      });
-      await loadGifts();
+      const newGift = { "Giver": giver, "Gift Name": name, "Priority": priority, "Price": price };
+      gifts.push(newGift);
+      renderGiftList(giver);
+      try {
+        await fetch(SHEET_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "add", ...newGift })
+        });
+      } catch (e) {
+        console.error("Error adding gift:", e);
+      }
     }
 
+    // Delete a gift
     async function deleteGift(giver, name) {
-      await fetch(SHEET_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "delete", Giver: giver, "Gift Name": name })
-      });
-      await loadGifts();
+      gifts = gifts.filter(g => !(g.Giver === giver && g["Gift Name"] === name));
+      renderGiftList(giver);
+      try {
+        await fetch(SHEET_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "delete", Giver: giver, "Gift Name": name })
+        });
+      } catch (e) {
+        console.error("Error deleting gift:", e);
+      }
     }
 
-    function showGifts(giver) {
-      currentGiver = giver;
-      tabsDiv.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.textContent === giver));
+    function renderGiftList(giver) {
       const giverGifts = gifts.filter(g => g.Giver === giver);
-
-      let html = `<h2>${giver}'s Gift Ideas</h2><div class="gift-list">`;
-      if (giverGifts.length === 0) html += `<p>No gifts yet — add one below!</p>`;
-      giverGifts.forEach(g => {
-        html += `
-          <div class="gift-item">
-            <span>🎁 ${g["Gift Name"]} — ${g.Priority} — $${g.Price}</span>
-            <button onclick="deleteGift('${giver}','${g["Gift Name"]}')">Remove</button>
-          </div>`;
-      });
+      let html = `<h2>${giver}'s Gift Ideas</h2>`;
+      html += `<div class="gift-list">`;
+      if (giverGifts.length === 0) {
+        html += `<p>No gifts yet — add one below!</p>`;
+      } else {
+        giverGifts.forEach(g => {
+          html += `
+            <div class="gift-item">
+              <span>🎁 ${g["Gift Name"]} — ${g.Priority} — $${g.Price}</span>
+              <button onclick="deleteGift('${giver}','${g["Gift Name"]}')">Remove</button>
+            </div>`;
+        });
+      }
       html += `</div>`;
-
       html += `
         <div class="add-form">
           <h3>Add a new gift</h3>
@@ -191,17 +242,22 @@
           </select>
           <input id="giftPrice" placeholder="Price" type="number" />
           <button class="add" onclick="handleAdd()">Add Gift</button>
-        </div>
-      `;
+        </div>`;
       contentDiv.innerHTML = html;
     }
 
-    async function handleAdd() {
+    function showGifts(giver) {
+      currentGiver = giver;
+      tabsDiv.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.textContent === giver));
+      renderGiftList(giver);
+    }
+
+    function handleAdd() {
       const name = document.getElementById("giftName").value.trim();
       const priority = document.getElementById("giftPriority").value;
       const price = document.getElementById("giftPrice").value.trim();
-      if (!name || !price) return alert("Please fill in all fields!");
-      await addGift(currentGiver, name, priority, price);
+      if (!name || !price) return alert("Please fill out all fields!");
+      addGift(currentGiver, name, priority, price);
       document.getElementById("giftName").value = "";
       document.getElementById("giftPrice").value = "";
     }
@@ -220,7 +276,9 @@
 
     initTabs();
   </script>
+
 </body>
 </html>
+
 
 
