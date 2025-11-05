@@ -4,39 +4,154 @@
   <meta charset="UTF-8">
   <title>🎄 Christmas Gift Exchange 2025 🎁</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f6f8fa; margin: 0; padding: 0; }
-    header { background: darkgreen; color: white; padding: 1.5em; text-align: center; }
-    main { padding: 1.5em; max-width: 900px; margin: auto; }
-    h1 { margin: 0 0 0.5em; }
-    table { border-collapse: collapse; width: 100%; margin-bottom: 2em; background: white; }
-    th, td { border: 1px solid #ccc; padding: 0.6em 1em; text-align: left; }
-    th { background: #e6f4ea; color: darkgreen; }
-    tr:nth-child(even) { background: #f9f9f9; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f6f8fa;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
 
-    .tabs { display: flex; flex-wrap: wrap; gap: 0.5em; margin-bottom: 1em; }
-    .tab { background: #e6f4ea; border-radius: 8px; padding: 0.5em 1em; cursor: pointer; color: darkgreen; font-weight: 500; }
-    .tab.active { background: darkgreen; color: white; }
+    /* Sidebar */
+    aside {
+      width: 280px;
+      background: #e6f4ea;
+      padding: 1em;
+      border-right: 2px solid #ccc;
+      overflow-y: auto;
+    }
 
-    .tab-content { display: none; background: white; border-radius: 10px; padding: 1.5em; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .tab-content.active { display: block; }
+    aside h2 {
+      color: darkgreen;
+      text-align: center;
+    }
 
-    .gift-form input { margin: 0.5em; padding: 0.4em; border: 1px solid #ccc; border-radius: 5px; }
-    .gift-form button { background: darkgreen; color: white; border: none; border-radius: 5px; padding: 0.5em 1em; cursor: pointer; }
-    .gift-form button:hover { background: #145a32; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 2em;
+      background: white;
+    }
 
-    .gift-list { margin-top: 1em; }
-    .gift-list table { width: 100%; }
-    .gift-list th { background: #f0fdf4; }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5em;
+      text-align: left;
+    }
+
+    th {
+      background: #c8e6c9;
+      color: darkgreen;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5em;
+      overflow-y: auto;
+    }
+
+    header {
+      width: 100%;
+      text-align: center;
+      background: darkgreen;
+      color: white;
+      padding: 1.2em 0;
+      border-radius: 8px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      justify-content: center;
+      margin: 1.5em 0;
+    }
+
+    .tab {
+      background: #e6f4ea;
+      border-radius: 8px;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      color: darkgreen;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .tab:hover {
+      background: #c8e6c9;
+    }
+
+    .tab.active {
+      background: darkgreen;
+      color: white;
+    }
+
+    /* Tab content */
+    .tab-content {
+      display: none;
+      background: white;
+      border-radius: 10px;
+      padding: 1.5em;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .gift-form input {
+      margin: 0.5em;
+      padding: 0.4em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .gift-form button {
+      background: darkgreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5em 1em;
+      cursor: pointer;
+    }
+
+    .gift-form button:hover {
+      background: #145a32;
+    }
+
+    .gift-list {
+      margin-top: 1em;
+    }
+
+    .gift-list table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .gift-list th {
+      background: #f0fdf4;
+    }
+
+    .gift-list th, .gift-list td {
+      border: 1px solid #ddd;
+      padding: 0.5em;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🎁 Family Gift Exchange 2025 🎄</h1>
-    <p>Click your name below to add gift ideas!</p>
-  </header>
-
-  <main>
-    <h2>Gift Exchange Pairs</h2>
+  <aside>
+    <h2>🎁 Gift Pairings</h2>
     <table>
       <tr><th>Giver</th><th>Receiver</th></tr>
       <tr><td>Jon</td><td>Katie</td></tr>
@@ -63,25 +178,33 @@
       <tr><td>Eden</td><td>Nora</td></tr>
       <tr><td>Nora</td><td>Eden</td></tr>
     </table>
+  </aside>
 
-    <h2>Gift Idea Tabs</h2>
+  <main>
+    <header>
+      <h1>🎄 Christmas Gift Exchange 2025 🎁</h1>
+      <p>Click your name below to view or add gift ideas</p>
+    </header>
+
     <div class="tabs" id="tabs"></div>
-
     <div id="tabContents"></div>
   </main>
 
   <script>
-    const givers = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff","Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+    const givers = [
+      "Jon", "Dave", "Karen", "Jen", "Dan", "Jason", "Stef", "Katie", "Chelsea", "Geoff",
+      "Eddie", "Gwen", "Evie", "Claire", "Main", "Theo", "Elora", "Eden", "Nora"
+    ];
 
     const tabs = document.getElementById('tabs');
     const contents = document.getElementById('tabContents');
 
-    // Create tabs and content areas
+    // Create tabs and corresponding content
     givers.forEach(name => {
       const tab = document.createElement('div');
       tab.classList.add('tab');
       tab.textContent = name;
-      tab.onclick = () => openTab(name);
+      tab.addEventListener('click', () => openTab(name));
       tabs.appendChild(tab);
 
       const content = document.createElement('div');
@@ -91,8 +214,8 @@
         <h3>${name}'s Gift Ideas</h3>
         <form class="gift-form" onsubmit="addGift(event, '${name}')">
           <input type="text" placeholder="Gift name" id="gift-${name}-name" required>
-          <input type="text" placeholder="Priority (e.g., High, Medium, Low)" id="gift-${name}-priority">
-          <input type="number" placeholder="Price estimate ($)" id="gift-${name}-price" min="0" step="1">
+          <input type="text" placeholder="Priority (High, Medium, Low)" id="gift-${name}-priority">
+          <input type="number" placeholder="Price ($)" id="gift-${name}-price" min="0" step="1">
           <button type="submit">Add Gift</button>
         </form>
         <div class="gift-list" id="list-${name}">
@@ -107,10 +230,15 @@
     function openTab(name) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelector(`.tab:contains('${name}')`);
-      event.target.classList.add('active');
-      document.getElementById(`content-${name}`).classList.add('active');
-      loadGifts(name);
+
+      const tab = Array.from(document.querySelectorAll('.tab')).find(t => t.textContent === name);
+      const content = document.getElementById(`content-${name}`);
+
+      if (tab && content) {
+        tab.classList.add('active');
+        content.classList.add('active');
+        loadGifts(name);
+      }
     }
 
     function addGift(e, name) {
@@ -136,9 +264,11 @@
       });
     }
 
-    // Open the first tab by default
+    // Open first tab by default
     document.querySelector('.tab').classList.add('active');
     document.querySelector('.tab-content').classList.add('active');
+    loadGifts(givers[0]);
   </script>
 </body>
 </html>
+
