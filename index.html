@@ -2,22 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Christmas Gift Exchange 2025 🎄</title>
+  <title>🎄 Christmas Gift Exchange 2025 🎁</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f9fafb; text-align: center; padding: 2em; }
-    h1 { color: darkgreen; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 0.5em 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f6f8fa; margin: 0; padding: 0; }
+    header { background: darkgreen; color: white; padding: 1.5em; text-align: center; }
+    main { padding: 1.5em; max-width: 900px; margin: auto; }
+    h1 { margin: 0 0 0.5em; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 2em; background: white; }
+    th, td { border: 1px solid #ccc; padding: 0.6em 1em; text-align: left; }
+    th { background: #e6f4ea; color: darkgreen; }
+    tr:nth-child(even) { background: #f9f9f9; }
+
+    .tabs { display: flex; flex-wrap: wrap; gap: 0.5em; margin-bottom: 1em; }
+    .tab { background: #e6f4ea; border-radius: 8px; padding: 0.5em 1em; cursor: pointer; color: darkgreen; font-weight: 500; }
+    .tab.active { background: darkgreen; color: white; }
+
+    .tab-content { display: none; background: white; border-radius: 10px; padding: 1.5em; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .tab-content.active { display: block; }
+
+    .gift-form input { margin: 0.5em; padding: 0.4em; border: 1px solid #ccc; border-radius: 5px; }
+    .gift-form button { background: darkgreen; color: white; border: none; border-radius: 5px; padding: 0.5em 1em; cursor: pointer; }
+    .gift-form button:hover { background: #145a32; }
+
+    .gift-list { margin-top: 1em; }
+    .gift-list table { width: 100%; }
+    .gift-list th { background: #f0fdf4; }
   </style>
 </head>
 <body>
-  <h1>🎁 Family Gift Exchange 🎁</h1>
-  <p>Welcome to our Christmas Gift Exchange 2025!</p>
-  <ul>
-    <li><b>Mom</b> → buying for <b>Jon</b></li>
-    <li><b>Sam</b> → buying for <b>Anna</b></li>
-    <li><b>Anna</b> → buying for <b>Mom</b></li>
-  </ul>
-  <p>Wishlists are due by <b>Dec 5th</b>!</p>
+  <header>
+    <h1>🎁 Family Gift Exchange 2025 🎄</h1>
+    <p>Click your name below to add gift ideas!</p>
+  </header>
+
+  <main>
+    <h2>Gift Exchange Pairs</h2>
+    <table>
+      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><td>Jon</td><td>Katie</td></tr>
+      <tr><td>Dave</td><td>Jason</td></tr>
+      <tr><td>Karen</td><td>Chelsea</td></tr>
+      <tr><td>Jen</td><td>Stef</td></tr>
+      <tr><td>Dan</td><td>Jon</td></tr>
+      <tr><td>Jason</td><td>Dave</td></tr>
+      <tr><td>Stef</td><td>Geoff</td></tr>
+      <tr><td>Katie</td><td>Dan</td></tr>
+      <tr><td>Chelsea</td><td>Jen</td></tr>
+      <tr><td>Geoff</td><td>Karen</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><td>Eddie</td><td>Gwen</td></tr>
+      <tr><td>Gwen</td><td>Evie</td></tr>
+      <tr><td>Evie</td><td>Claire</td></tr>
+      <tr><td>Claire</td><td>Eddie</td></tr>
+      <tr><td>Main</td><td>Theo</td></tr>
+      <tr><td>Theo</td><td>Elora</td></tr>
+      <tr><td>Elora</td><td>Main</td></tr>
+      <tr><td>Eden</td><td>Nora</td></tr>
+      <tr><td>Nora</td><td>Eden</td></tr>
+    </table>
+
+    <h2>Gift Idea Tabs</h2>
+    <div class="tabs" id="tabs"></div>
+
+    <div id="tabContents"></div>
+  </main>
+
+  <script>
+    const givers = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff","Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+
+    const tabs = document.getElementById('tabs');
+    const contents = document.getElementById('tabContents');
+
+    // Create tabs and content areas
+    givers.forEach(name => {
+      const tab = document.createElement('div');
+      tab.classList.add('tab');
+      tab.textContent = name;
+      tab.onclick = () => openTab(name);
+      tabs.appendChild(tab);
+
+      const content = document.createElement('div');
+      content.classList.add('tab-content');
+      content.id = `content-${name}`;
+      content.innerHTML = `
+        <h3>${name}'s Gift Ideas</h3>
+        <form class="gift-form" onsubmit="addGift(event, '${name}')">
+          <input type="text" placeholder="Gift name" id="gift-${name}-name" required>
+          <input type="text" placeholder="Priority (e.g., High, Medium, Low)" id="gift-${name}-priority">
+          <input type="number" placeholder="Price estimate ($)" id="gift-${name}-price" min="0" step="1">
+          <button type="submit">Add Gift</button>
+        </form>
+        <div class="gift-list" id="list-${name}">
+          <table>
+            <tr><th>Gift</th><th>Priority</th><th>Price ($)</th></tr>
+          </table>
+        </div>
+      `;
+      contents.appendChild(content);
+    });
+
+    function openTab(name) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector(`.tab:contains('${name}')`);
+      event.target.classList.add('active');
+      document.getElementById(`content-${name}`).classList.add('active');
+      loadGifts(name);
+    }
+
+    function addGift(e, name) {
+      e.preventDefault();
+      const giftName = document.getElementById(`gift-${name}-name`).value;
+      const priority = document.getElementById(`gift-${name}-priority`).value;
+      const price = document.getElementById(`gift-${name}-price`).value;
+
+      const gifts = JSON.parse(localStorage.getItem(`gifts-${name}`) || "[]");
+      gifts.push({ giftName, priority, price });
+      localStorage.setItem(`gifts-${name}`, JSON.stringify(gifts));
+
+      e.target.reset();
+      loadGifts(name);
+    }
+
+    function loadGifts(name) {
+      const listEl = document.querySelector(`#list-${name} table`);
+      const gifts = JSON.parse(localStorage.getItem(`gifts-${name}`) || "[]");
+      listEl.innerHTML = `<tr><th>Gift</th><th>Priority</th><th>Price ($)</th></tr>`;
+      gifts.forEach(g => {
+        listEl.innerHTML += `<tr><td>${g.giftName}</td><td>${g.priority}</td><td>${g.price}</td></tr>`;
+      });
+    }
+
+    // Open the first tab by default
+    document.querySelector('.tab').classList.add('active');
+    document.querySelector('.tab-content').classList.add('active');
+  </script>
 </body>
 </html>
