@@ -105,11 +105,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
     .gift-item span {
       flex: 1;
       padding: 0 5px;
       font-size: 14px;
+      word-break: break-word;
     }
     .remove-btn {
       background: #ef5350;
@@ -171,11 +173,11 @@
       <input id="price" placeholder="Price Estimate" />
       <input id="url" placeholder="Product URL" />
       <input id="notes" placeholder="Notes" />
-      <button onclick="addGift()">Add Gift</button>
+      <button id="addGiftBtn">Add Gift</button>
       <div class="gift-list" id="giftList"></div>
       <h4>Stocking Ideas:</h4>
       <textarea id="stockingIdeas" placeholder="Add stocking ideas..."></textarea><br/>
-      <button onclick="saveStockingIdeas()">Save Stocking Ideas</button>
+      <button id="saveStockingBtn">Save Stocking Ideas</button>
     </div>
   </div>
 
@@ -190,19 +192,35 @@
     let allData = {};
 
     async function loadData() {
-      const res = await fetch(scriptURL);
-      allData = await res.json();
+      try {
+        const res = await fetch(scriptURL);
+        allData = await res.json();
+      } catch (e) {
+        console.error("Error loading data:", e);
+        allData = {};
+      }
     }
 
     async function init() {
       await loadData();
       const container = document.getElementById("tabContainer");
-      let html = "";
-      people.forEach((p, i) => {
-        if (i === 10) html += "<br>"; // split rows
-        html += `<div class="tab" onclick="selectPerson('${p}')">${p}</div>`;
+      let html = '<div style="margin-bottom:10px;">';
+      people.slice(0, 10).forEach(p => {
+        html += `<div class="tab" data-name="${p}">${p}</div>`;
       });
+      html += '</div><div>';
+      people.slice(10).forEach(p => {
+        html += `<div class="tab" data-name="${p}">${p}</div>`;
+      });
+      html += '</div>';
       container.innerHTML = html;
+
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.addEventListener("click", () => selectPerson(tab.dataset.name));
+      });
+
+      document.getElementById("addGiftBtn").addEventListener("click", addGift);
+      document.getElementById("saveStockingBtn").addEventListener("click", saveStockingIdeas);
     }
 
     function selectPerson(name) {
@@ -210,7 +228,7 @@
       document.getElementById("giftForm").style.display = "block";
       document.getElementById("activeName").textContent = `${name}'s Gift List`;
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active-tab"));
-      event.target.classList.add("active-tab");
+      document.querySelector(`.tab[data-name='${name}']`).classList.add("active-tab");
       renderGifts();
       renderStocking();
     }
@@ -240,6 +258,7 @@
     }
 
     async function addGift() {
+      if (!activePerson) return;
       const gift = {
         name: document.getElementById("giftName").value,
         priority: document.getElementById("priority").value,
@@ -253,11 +272,7 @@
       });
       await loadData();
       renderGifts();
-      document.getElementById("giftName").value = "";
-      document.getElementById("priority").value = "";
-      document.getElementById("price").value = "";
-      document.getElementById("url").value = "";
-      document.getElementById("notes").value = "";
+      document.querySelectorAll("#giftName, #priority, #price, #url, #notes").forEach(i => i.value = "");
     }
 
     async function removeGift(index) {
@@ -282,6 +297,7 @@
   </script>
 </body>
 </html>
+
 
 
 
