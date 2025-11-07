@@ -1,342 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Christmas Gift Exchange 🎁</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christmas Gift Exchange</title>
   <style>
-    /* --- Keep your existing visual styles (unchanged) --- */
-    body { font-family: Arial, sans-serif; background: #f8fff8; margin:0; display:flex; }
-    .sidebar{ background:#e8f5e9; padding:20px; width:260px; border-right:3px solid #a5d6a7; }
-    .sidebar h2{ color:#1b5e20; text-align:center; }
-    table{ width:100%; border-collapse:collapse; background:#c8e6c9; border-radius:8px; overflow:hidden; }
-    th,td{ border:1px solid #a5d6a7; padding:4px 8px; text-align:left; font-size:14px; }
-    th{ background:#81c784; color:white; }
-    .main{ flex-grow:1; padding:20px; }
-    .tab-container { text-align:center; margin-bottom:20px; }
-    .tab{ display:inline-block; margin:5px; padding:10px 15px; border-radius:20px; background:#a5d6a7; cursor:pointer; transition:0.2s; }
-    .tab:hover{ background:#81c784; }
-    .active-tab{ background:#4caf50; color:#fff; }
-    .gift-form{ text-align:center; display:none; }
-    input, textarea{ margin:4px; padding:6px; width:160px; }
-    textarea{ width:90%; max-width:500px; height:60px; }
-    button{ margin:5px; padding:8px 15px; background:#4caf50; color:white; border:none; border-radius:6px; cursor:pointer; }
-    button:hover{ background:#388e3c; }
-    .gift-list{ margin-top:15px; text-align:left; width:90%; margin-left:auto; margin-right:auto; }
-    .gift-item{ background:#f1f8e9; padding:6px; margin-bottom:5px; border-radius:6px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
-    .gift-item span{ flex:1; padding:0 5px; font-size:14px; word-break:break-word; }
-    .remove-btn{ background:#ef5350; color:white; border:none; border-radius:4px; cursor:pointer; padding:4px 8px; }
-    .remove-btn:hover{ background:#c62828; }
-    .group-title{ text-align:center; font-weight:bold; color:#2e7d32; margin-top:10px; }
-    .status { text-align:center; color:#333; margin-top:8px; font-size:13px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      background-color: #f5f7f5;
+      color: #333;
+    }
+    .left-column {
+      width: 260px;
+      background-color: #e8f5e9;
+      padding: 20px;
+      border-right: 2px solid #a5d6a7;
+    }
+    .group-title {
+      font-weight: bold;
+      color: #2e7d32;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    .pair-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .pair-table td {
+      padding: 4px 6px;
+      border-bottom: 1px solid #c8e6c9;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+      gap: 5px;
+      justify-content: center;
+    }
+    .tab {
+      padding: 8px 14px;
+      background-color: #c8e6c9;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .tab.active {
+      background-color: #81c784;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border-bottom: 1px solid #ddd;
+      padding: 6px;
+      text-align: left;
+    }
+    th {
+      background-color: #e8f5e9;
+    }
+    input, textarea {
+      margin: 3px 0;
+      padding: 6px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    textarea {
+      height: 60px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 6px;
+      padding: 6px 10px;
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #57a05b;
+    }
+    h3 {
+      color: #2e7d32;
+    }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>🎄 Gift Exchange</h2>
+  <div class="left-column">
     <div class="group-title">Adults</div>
-    <table>
-      <tr><th>Giver</th><th>Receiver</th></tr>
-      <tr><td>Jon</td><td>Katie</td></tr>
-      <tr><td>Dave</td><td>Jason</td></tr>
-      <tr><td>Karen</td><td>Chelsea</td></tr>
-      <tr><td>Jen</td><td>Stef</td></tr>
-      <tr><td>Dan</td><td>Jon</td></tr>
-      <tr><td>Jason</td><td>Dave</td></tr>
-      <tr><td>Stef</td><td>Geoff</td></tr>
-      <tr><td>Katie</td><td>Dan</td></tr>
-      <tr><td>Chelsea</td><td>Jen</td></tr>
-      <tr><td>Geoff</td><td>Karen</td></tr>
+    <table class="pair-table">
+      <tr><td>Jon → Katie</td></tr>
+      <tr><td>Dave → Jason</td></tr>
+      <tr><td>Karen → Chelsea</td></tr>
+      <tr><td>Jen → Stef</td></tr>
+      <tr><td>Dan → Jon</td></tr>
+      <tr><td>Jason → Dave</td></tr>
+      <tr><td>Stef → Geoff</td></tr>
+      <tr><td>Katie → Dan</td></tr>
+      <tr><td>Chelsea → Jen</td></tr>
+      <tr><td>Geoff → Karen</td></tr>
     </table>
+
     <div class="group-title">Kids</div>
-    <table>
-      <tr><th>Giver</th><th>Receiver</th></tr>
-      <tr><td>Eddie</td><td>Gwen</td></tr>
-      <tr><td>Gwen</td><td>Evie</td></tr>
-      <tr><td>Evie</td><td>Claire</td></tr>
-      <tr><td>Claire</td><td>Eddie</td></tr>
-      <tr><td>Main</td><td>Theo</td></tr>
-      <tr><td>Theo</td><td>Elora</td></tr>
-      <tr><td>Elora</td><td>Main</td></tr>
-      <tr><td>Eden</td><td>Nora</td></tr>
-      <tr><td>Nora</td><td>Eden</td></tr>
+    <table class="pair-table">
+      <tr><td>Eddie → Gwen</td></tr>
+      <tr><td>Gwen → Evie</td></tr>
+      <tr><td>Evie → Claire</td></tr>
+      <tr><td>Claire → Eddie</td></tr>
+      <tr><td>Main → Theo</td></tr>
+      <tr><td>Theo → Elora</td></tr>
+      <tr><td>Elora → Main</td></tr>
+      <tr><td>Eden → Nora</td></tr>
+      <tr><td>Nora → Eden</td></tr>
     </table>
   </div>
 
-  <div class="main">
-    <div class="tab-container" id="tabContainer"></div>
-
-    <div class="gift-form" id="giftForm">
-      <h3 id="activeName"></h3>
-
-      <input id="giftName" placeholder="Gift Name" />
-      <input id="priority" placeholder="Priority" />
-      <input id="price" placeholder="Price Estimate" />
-      <input id="url" placeholder="Product URL" />
-      <input id="notes" placeholder="Notes" />
-      <br/>
-      <button id="addGiftBtn">Add Gift</button>
-      <div class="status" id="statusLine"></div>
-
-      <div class="gift-list" id="giftList"></div>
-
-      <h4>Stocking Ideas:</h4>
-      <textarea id="stockingIdeas" placeholder="Add stocking ideas..."></textarea><br/>
-      <button id="saveStockingBtn">Save Stocking Ideas</button>
+  <div class="content">
+    <div class="tabs">
+      <div class="tab" data-person="Jon">Jon</div>
+      <div class="tab" data-person="Dave">Dave</div>
+      <div class="tab" data-person="Karen">Karen</div>
+      <div class="tab" data-person="Jen">Jen</div>
+      <div class="tab" data-person="Dan">Dan</div>
+      <div class="tab" data-person="Jason">Jason</div>
+      <div class="tab" data-person="Stef">Stef</div>
+      <div class="tab" data-person="Katie">Katie</div>
+      <div class="tab" data-person="Chelsea">Chelsea</div>
+      <div class="tab" data-person="Geoff">Geoff</div>
     </div>
+    <div class="tabs">
+      <div class="tab" data-person="Eddie">Eddie</div>
+      <div class="tab" data-person="Gwen">Gwen</div>
+      <div class="tab" data-person="Evie">Evie</div>
+      <div class="tab" data-person="Claire">Claire</div>
+      <div class="tab" data-person="Main">Main</div>
+      <div class="tab" data-person="Theo">Theo</div>
+      <div class="tab" data-person="Elora">Elora</div>
+      <div class="tab" data-person="Eden">Eden</div>
+      <div class="tab" data-person="Nora">Nora</div>
+    </div>
+
+    <div id="tab-contents"></div>
   </div>
 
-<script>
-/* ------------------------
-   Config
-   ------------------------ */
-const scriptURL = "https://script.google.com/macros/s/AKfycbxYmFD3N0UZBZOuFGYsXdtV5aJufjRyKgdI2B3cez4A/dev";
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxYmFD3N0UZBZOuFGYsXdtV5aJufjRyKgdI2B3cez4A/dev";
+    const people = [
+      "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
+      "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
+    ];
 
-/* people list (first 10 adult row, rest kids row) */
-const people = [
-  "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
-  "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
-];
+    const tabContents = document.getElementById("tab-contents");
+    let giftsData = {};
+    let stockingData = {};
 
-/* ------------------------
-   State
-   ------------------------ */
-let activePerson = null;
-let allData = {};     // shape: { PersonName: { gifts: [ {name,priority,price,url,notes} ], stocking: "..." } }
+    people.forEach(person => {
+      const div = document.createElement("div");
+      div.classList.add("tab-content");
+      div.id = `content-${person}`;
+      div.innerHTML = `
+        <h3>${person}'s Gift List</h3>
+        <input id="giftName-${person}" placeholder="Gift name" />
+        <input id="giftPriority-${person}" placeholder="Priority" />
+        <input id="giftPrice-${person}" placeholder="Price estimate" />
+        <input id="giftURL-${person}" placeholder="Product URL (optional)" />
+        <textarea id="giftNotes-${person}" placeholder="Notes (optional)"></textarea>
+        <button onclick="addGift('${person}')">Add Gift</button>
+        <table id="giftTable-${person}">
+          <tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th>Remove</th></tr>
+        </table>
 
-/* Utility helper: show status text briefly */
-function setStatus(msg, ms=3000) {
-  const el = document.getElementById('statusLine');
-  el.textContent = msg;
-  if (ms>0) setTimeout(()=>{ if (el.textContent===msg) el.textContent=''; }, ms);
-}
-
-/* ------------------------
-   Load from sheet (GET)
-   ------------------------ */
-async function loadData() {
-  try {
-    // cache-bust to avoid stale responses
-    const res = await fetch(scriptURL + "?_=" + Date.now(), { cache: "no-store" });
-    if (!res.ok) throw new Error("GET failed: " + res.status);
-    allData = await res.json();
-  } catch (err) {
-    console.error("Error loading data:", err);
-    setStatus("Unable to load data from sheet (check Apps Script / deployment).", 6000);
-    allData = {};
-  }
-}
-
-/* ------------------------
-   Init tabs and handlers
-   ------------------------ */
-async function init() {
-  await loadData();
-  buildTabs();
-  document.getElementById('addGiftBtn').addEventListener('click', handleAddGift);
-  document.getElementById('saveStockingBtn').addEventListener('click', handleSaveStocking);
-}
-
-/* Build the two-row tab layout */
-function buildTabs(){
-  const container = document.getElementById('tabContainer');
-  // row 1 (adults)
-  let html = '<div style="margin-bottom:10px;">';
-  people.slice(0,10).forEach(name => {
-    html += `<div class="tab" data-name="${name}">${name}</div>`;
-  });
-  html += '</div><div>';
-  people.slice(10).forEach(name => {
-    html += `<div class="tab" data-name="${name}">${name}</div>`;
-  });
-  html += '</div>';
-  container.innerHTML = html;
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', ()=> selectPerson(tab.dataset.name));
-  });
-}
-
-/* ------------------------
-   Select person -> show form and data
-   ------------------------ */
-async function selectPerson(name) {
-  activePerson = name;
-  document.getElementById('giftForm').style.display = 'block';
-  document.getElementById('activeName').textContent = `${name}'s Gift List`;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active-tab'));
-  const activeTab = document.querySelector(`.tab[data-name='${name}']`);
-  if (activeTab) activeTab.classList.add('active-tab');
-
-  // ensure freshest data from server
-  await loadData();
-  renderGifts();    // will reflect what is in allData (or empty)
-  renderStocking();
-}
-
-/* ------------------------
-   Render helpers
-   ------------------------ */
-function renderGifts(){
-  const list = document.getElementById('giftList');
-  list.innerHTML = '';
-  const entry = allData[activePerson];
-  const gifts = (entry && entry.gifts) ? entry.gifts : [];
-  if (!gifts.length) {
-    list.innerHTML = '<div style="color:#666; padding:8px;">No gifts yet — add one below.</div>';
-    return;
-  }
-  gifts.forEach((g, idx) => {
-    const row = document.createElement('div');
-    row.className = 'gift-item';
-    const urlLink = g.url ? `<a href="${escapeHtmlAttr(g.url)}" target="_blank" rel="noopener">Link</a>` : '';
-    row.innerHTML = `
-      <span><strong>${escapeHtml(g.name)}</strong></span>
-      <span>${escapeHtml(g.priority)}</span>
-      <span>$${escapeHtml(g.price)}</span>
-      <span>${urlLink}</span>
-      <span>${escapeHtml(g.notes)}</span>
-      <button class="remove-btn" data-idx="${idx}">X</button>
-    `;
-    // attach remove click
-    row.querySelector('.remove-btn').addEventListener('click', ()=> removeGift(idx));
-    list.appendChild(row);
-  });
-}
-
-function renderStocking(){
-  const entry = allData[activePerson];
-  const text = (entry && entry.stocking) ? entry.stocking : '';
-  document.getElementById('stockingIdeas').value = text;
-}
-
-/* ------------------------
-   Actions: Add / Remove / Save
-   ------------------------ */
-async function handleAddGift(){
-  if (!activePerson) return alert('Select a person first.');
-  const gift = {
-    name: document.getElementById('giftName').value.trim(),
-    priority: document.getElementById('priority').value.trim(),
-    price: document.getElementById('price').value.trim(),
-    url: document.getElementById('url').value.trim(),
-    notes: document.getElementById('notes').value.trim()
-  };
-  if (!gift.name) return alert('Please enter a gift name');
-
-  // optimistic UI: push into allData immediately so user sees it
-  if (!allData[activePerson]) allData[activePerson] = { gifts: [], stocking: '' };
-  allData[activePerson].gifts.push(gift);
-  renderGifts();
-  setStatus('Saving gift…');
-
-  // POST to Apps Script (JSON body + proper header)
-  try {
-    const res = await fetch(scriptURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'addGift', person: activePerson, gift })
+        <h3>Stocking Ideas</h3>
+        <textarea id="stocking-${person}" placeholder="Add stocking ideas..."></textarea>
+        <button onclick="saveStocking('${person}')">Save Stocking Ideas</button>
+      `;
+      tabContents.appendChild(div);
     });
-    const j = await res.json();
-    if (res.ok && j && j.status === 'success') {
-      setStatus('Saved ✓');
-      // reload authoritative data to ensure index values match
-      await loadData();
-      renderGifts();
-    } else {
-      throw new Error('Save failed: ' + JSON.stringify(j));
-    }
-  } catch (err) {
-    console.error("Error saving gift:", err);
-    setStatus('Save failed — check Apps Script deployment and console', 6000);
-    alert('Save failed — check console and Apps Script deployment. Error: ' + err.message);
-  }
 
-  // clear inputs
-  document.getElementById('giftName').value = '';
-  document.getElementById('priority').value = '';
-  document.getElementById('price').value = '';
-  document.getElementById('url').value = '';
-  document.getElementById('notes').value = '';
-}
-
-async function removeGift(index){
-  if (!activePerson) return;
-  if (!confirm('Remove this gift?')) return;
-  setStatus('Removing…');
-  // optimistic UI remove
-  const entry = allData[activePerson];
-  if (entry && entry.gifts && entry.gifts[index]) {
-    entry.gifts.splice(index, 1);
-    renderGifts();
-  }
-  try {
-    const res = await fetch(scriptURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'removeGift', person: activePerson, index })
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(`content-${tab.dataset.person}`).classList.add("active");
+      });
     });
-    const j = await res.json();
-    if (res.ok && j && (j.status === 'deleted' || j.status === 'success')) {
-      setStatus('Removed ✓');
-      await loadData();
-      renderGifts();
-    } else {
-      throw new Error('Remove failed: ' + JSON.stringify(j));
+
+    async function addGift(person) {
+      const name = document.getElementById(`giftName-${person}`).value.trim();
+      const priority = document.getElementById(`giftPriority-${person}`).value.trim();
+      const price = document.getElementById(`giftPrice-${person}`).value.trim();
+      const url = document.getElementById(`giftURL-${person}`).value.trim();
+      const notes = document.getElementById(`giftNotes-${person}`).value.trim();
+      if (!name) return alert("Please enter a gift name.");
+
+      const gift = { person, name, priority, price, url, notes };
+      await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({ action: "addGift", ...gift }),
+      });
+      renderGift(person, gift);
+      document.getElementById(`giftName-${person}`).value = "";
+      document.getElementById(`giftPriority-${person}`).value = "";
+      document.getElementById(`giftPrice-${person}`).value = "";
+      document.getElementById(`giftURL-${person}`).value = "";
+      document.getElementById(`giftNotes-${person}`).value = "";
     }
-  } catch (err) {
-    console.error('Error removing gift:', err);
-    setStatus('Remove failed', 6000);
-    alert('Remove failed — check console and Apps Script deployment. Error: ' + err.message);
-  }
-}
 
-async function handleSaveStocking(){
-  if (!activePerson) return alert('Select a person first.');
-  const stocking = document.getElementById('stockingIdeas').value;
-  setStatus('Saving stocking ideas…');
-  try {
-    const res = await fetch(scriptURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'saveStocking', person: activePerson, stocking })
-    });
-    const j = await res.json();
-    if (res.ok && j && j.status === 'stocking saved') {
-      setStatus('Stocking saved ✓');
-      await loadData();
-      renderStocking();
-    } else {
-      throw new Error('Save stocking failed: ' + JSON.stringify(j));
+    function renderGift(person, gift) {
+      const table = document.getElementById(`giftTable-${person}`);
+      const row = document.createElement("tr");
+      const linkHTML = gift.url ? `<a href="${gift.url}" target="_blank">View</a>` : "";
+      row.innerHTML = `
+        <td>${gift.name}</td>
+        <td>${gift.priority}</td>
+        <td>${gift.price}</td>
+        <td>${linkHTML}</td>
+        <td>${gift.notes || ""}</td>
+        <td><button onclick="removeGift(this, '${person}', '${gift.name}')">Remove</button></td>
+      `;
+      table.appendChild(row);
     }
-  } catch (err) {
-    console.error('Error saving stocking:', err);
-    setStatus('Save failed — check Apps Script', 6000);
-    alert('Save failed — check console and Apps Script. Error: ' + err.message);
-  }
-}
 
-/* ------------------------
-   Helpers
-   ------------------------ */
-function escapeHtml(str){
-  if (!str) return '';
-  return str.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-}
-function escapeHtmlAttr(str){ return escapeHtml(str); }
+    async function removeGift(button, person, name) {
+      button.closest("tr").remove();
+      await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({ action: "removeGift", person, name }),
+      });
+    }
 
-/* ------------------------
-   Start
-   ------------------------ */
-init();
-</script>
+    async function saveStocking(person) {
+      const text = document.getElementById(`stocking-${person}`).value;
+      await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({ action: "saveStocking", person, text }),
+      });
+      alert("Stocking ideas saved!");
+    }
+
+    async function loadData() {
+      const res = await fetch(scriptURL + "?action=getData");
+      const data = await res.json();
+      if (data.gifts) {
+        data.gifts.forEach(g => renderGift(g.person, g));
+      }
+      if (data.stockings) {
+        Object.keys(data.stockings).forEach(p => {
+          document.getElementById(`stocking-${p}`).value = data.stockings[p];
+        });
+      }
+    }
+
+    loadData();
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
