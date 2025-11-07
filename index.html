@@ -1,284 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Christmas Gift Exchange 🎁</title>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-      margin: 0;
-      background: #f9f9f9;
-      color: #333;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🎁 Christmas Gift Exchange</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #f8fff8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    /* Left side pairings */
-    .left {
-      width: 35%;
-      background: #fff;
-      padding: 20px;
-      border-right: 2px solid #ddd;
-      overflow-y: auto;
-    }
+  h1 {
+    background-color: #2e8b57;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
 
-    .left h2 {
-      margin-bottom: 10px;
-      color: #b30000;
-    }
+  .container {
+    display: flex;
+    gap: 40px;
+    width: 90%;
+    margin: 20px auto;
+  }
 
-    .pairing-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
+  .pairings {
+    width: 220px;
+  }
 
-    .pairing-table td {
-      padding: 6px 8px;
-      border-bottom: 1px solid #eee;
-    }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
 
-    .separator {
-      border-top: 3px solid #b30000;
-      margin: 20px 0;
-    }
+  th {
+    background-color: #3cb371;
+    color: white;
+    padding: 6px;
+    text-align: left;
+  }
 
-    /* Main content */
-    .main {
-      flex: 1;
-      padding: 20px;
-    }
+  td {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+  }
 
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
+  .tabs {
+    flex-grow: 1;
+    text-align: center;
+  }
 
-    .tab {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      padding: 8px 16px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+  .tab-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 8px;
+  }
 
-    .tab.active {
-      background: #b30000;
-      color: white;
-      font-weight: bold;
-    }
+  .tab-buttons button {
+    padding: 8px 14px;
+    border: none;
+    background-color: #3cb371;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+  }
 
-    .gift-list {
-      margin-top: 10px;
-    }
+  .tab-buttons button.active {
+    background-color: #2e8b57;
+  }
 
-    .gift-item {
-      background: #fff;
-      margin-bottom: 8px;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  .tab-content {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
 
-    .gift-item button {
-      background: #ff5c5c;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 4px 10px;
-      cursor: pointer;
-    }
+  .gift-list {
+    margin-top: 15px;
+  }
 
-    .add-form {
-      background: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 20px;
-      border: 1px solid #ddd;
-    }
+  .gift-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eafaea;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+  }
 
-    input, select {
-      margin: 4px;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
+  .gift-item button {
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
-    button.add {
-      background: #b30000;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+  input, select {
+    margin: 4px;
+    padding: 6px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+  }
+
+  button.add-btn {
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
 
-  <div class="left">
-    <h2>🎅 Group 1</h2>
-    <table class="pairing-table">
-      <tr><td>Jon → Katie</td></tr>
-      <tr><td>Dave → Jason</td></tr>
-      <tr><td>Karen → Chelsea</td></tr>
-      <tr><td>Jen → Stef</td></tr>
-      <tr><td>Dan → Jon</td></tr>
-      <tr><td>Jason → Dave</td></tr>
-      <tr><td>Stef → Geoff</td></tr>
-      <tr><td>Katie → Dan</td></tr>
-      <tr><td>Chelsea → Jen</td></tr>
-      <tr><td>Geoff → Karen</td></tr>
+<h1>🎄 Family Gift Exchange 🎁</h1>
+
+<div class="container">
+
+  <!-- LEFT SIDE: Pairings -->
+  <div class="pairings">
+    <h3>Adults</h3>
+    <table>
+      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><td>Jon</td><td>Katie</td></tr>
+      <tr><td>Dave</td><td>Jason</td></tr>
+      <tr><td>Karen</td><td>Chelsea</td></tr>
+      <tr><td>Jen</td><td>Stef</td></tr>
+      <tr><td>Dan</td><td>Jon</td></tr>
+      <tr><td>Jason</td><td>Dave</td></tr>
+      <tr><td>Stef</td><td>Geoff</td></tr>
+      <tr><td>Katie</td><td>Dan</td></tr>
+      <tr><td>Chelsea</td><td>Jen</td></tr>
+      <tr><td>Geoff</td><td>Karen</td></tr>
     </table>
 
-    <div class="separator"></div>
-
-    <h2>🎁 Group 2</h2>
-    <table class="pairing-table">
-      <tr><td>Eddie → Gwen</td></tr>
-      <tr><td>Gwen → Evie</td></tr>
-      <tr><td>Evie → Claire</td></tr>
-      <tr><td>Claire → Eddie</td></tr>
-      <tr><td>Main → Theo</td></tr>
-      <tr><td>Theo → Elora</td></tr>
-      <tr><td>Elora → Main</td></tr>
-      <tr><td>Eden → Nora</td></tr>
-      <tr><td>Nora → Eden</td></tr>
+    <h3>Kids</h3>
+    <table>
+      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><td>Eddie</td><td>Gwen</td></tr>
+      <tr><td>Gwen</td><td>Evie</td></tr>
+      <tr><td>Evie</td><td>Claire</td></tr>
+      <tr><td>Claire</td><td>Eddie</td></tr>
+      <tr><td>Main</td><td>Theo</td></tr>
+      <tr><td>Theo</td><td>Elora</td></tr>
+      <tr><td>Elora</td><td>Main</td></tr>
+      <tr><td>Eden</td><td>Nora</td></tr>
+      <tr><td>Nora</td><td>Eden</td></tr>
     </table>
   </div>
 
-  <div class="main">
-    <div class="tabs" id="tabs"></div>
-    <div id="content"></div>
+  <!-- RIGHT SIDE: Tabs -->
+  <div class="tabs">
+    <div class="tab-buttons" id="tabButtons"></div>
+    <div class="tab-content" id="tabContent">
+      <p>Select a giver to view or add gifts.</p>
+    </div>
   </div>
+</div>
 
-  <script>
-    const SHEET_URL = "https://script.google.com/macros/s/AKfycbw7ouiHoNqOHdM6IJsQrynNkyjkHg-2owdKmpyCAcoyyfd6Aspr3k9w6AiBZPsCslN38w/exec";
-    const givers = [
-      "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
-      "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
-    ];
+<script>
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbw7ouiHoNqOHdM6IJsQrynNkyjkHg-2owdKmpyCAcoyyfd6Aspr3k9w6AiBZPsCslN38w/exec";
+const givers = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff","Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+let currentGiver = null;
+let allGifts = [];
 
-    const tabsDiv = document.getElementById("tabs");
-    const contentDiv = document.getElementById("content");
-    let currentGiver = givers[0];
-    let gifts = [];
+async function fetchGifts() {
+  const res = await fetch(SHEET_URL);
+  allGifts = await res.json();
+}
 
-    // Load all gifts from Google Sheet
-    async function loadGifts() {
-      try {
-        const res = await fetch(SHEET_URL + "?t=" + Date.now()); // prevent caching
-        gifts = await res.json();
-        showGifts(currentGiver);
-      } catch (e) {
-        console.error("Error loading gifts:", e);
-      }
-    }
+function renderTabs() {
+  const container = document.getElementById("tabButtons");
+  container.innerHTML = "";
+  givers.forEach(giver => {
+    const btn = document.createElement("button");
+    btn.textContent = giver;
+    btn.onclick = () => openTab(giver, btn);
+    container.appendChild(btn);
+  });
+}
 
-    // Add a gift
-    async function addGift(giver, name, priority, price) {
-      const newGift = { "Giver": giver, "Gift Name": name, "Priority": priority, "Price": price };
-      gifts.push(newGift);
-      renderGiftList(giver);
-      try {
-        await fetch(SHEET_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "add", ...newGift })
-        });
-      } catch (e) {
-        console.error("Error adding gift:", e);
-      }
-    }
+function openTab(giver, btn) {
+  currentGiver = giver;
+  document.querySelectorAll(".tab-buttons button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderGiftForm();
+}
 
-    // Delete a gift
-    async function deleteGift(giver, name) {
-      gifts = gifts.filter(g => !(g.Giver === giver && g["Gift Name"] === name));
-      renderGiftList(giver);
-      try {
-        await fetch(SHEET_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "delete", Giver: giver, "Gift Name": name })
-        });
-      } catch (e) {
-        console.error("Error deleting gift:", e);
-      }
-    }
+function renderGiftForm() {
+  const tabContent = document.getElementById("tabContent");
+  const gifts = allGifts.filter(g => g.Giver === currentGiver);
+  tabContent.innerHTML = `
+    <h2>${currentGiver}'s Gift Ideas</h2>
+    <div>
+      <input id="giftName" placeholder="Gift name" />
+      <select id="priority">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <input id="price" placeholder="Price $" type="number" min="0"/>
+      <button class="add-btn" onclick="addGift()">Add Gift</button>
+    </div>
+    <div class="gift-list" id="giftList"></div>
+  `;
+  renderGiftList(gifts);
+}
 
-    function renderGiftList(giver) {
-      const giverGifts = gifts.filter(g => g.Giver === giver);
-      let html = `<h2>${giver}'s Gift Ideas</h2>`;
-      html += `<div class="gift-list">`;
-      if (giverGifts.length === 0) {
-        html += `<p>No gifts yet — add one below!</p>`;
-      } else {
-        giverGifts.forEach(g => {
-          html += `
-            <div class="gift-item">
-              <span>🎁 ${g["Gift Name"]} — ${g.Priority} — $${g.Price}</span>
-              <button onclick="deleteGift('${giver}','${g["Gift Name"]}')">Remove</button>
-            </div>`;
-        });
-      }
-      html += `</div>`;
-      html += `
-        <div class="add-form">
-          <h3>Add a new gift</h3>
-          <input id="giftName" placeholder="Gift name" />
-          <select id="giftPriority">
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-          </select>
-          <input id="giftPrice" placeholder="Price" type="number" />
-          <button class="add" onclick="handleAdd()">Add Gift</button>
-        </div>`;
-      contentDiv.innerHTML = html;
-    }
+function renderGiftList(gifts) {
+  const list = document.getElementById("giftList");
+  list.innerHTML = "";
+  gifts.forEach(g => {
+    const item = document.createElement("div");
+    item.className = "gift-item";
+    item.innerHTML = `
+      <span>${g["Gift Name"]} — ${g.Priority} — $${g.Price}</span>
+      <button onclick="deleteGift('${g["Gift Name"]}')">Remove</button>
+    `;
+    list.appendChild(item);
+  });
+}
 
-    function showGifts(giver) {
-      currentGiver = giver;
-      tabsDiv.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.textContent === giver));
-      renderGiftList(giver);
-    }
+async function addGift() {
+  const name = document.getElementById("giftName").value.trim();
+  const priority = document.getElementById("priority").value;
+  const price = document.getElementById("price").value.trim();
 
-    function handleAdd() {
-      const name = document.getElementById("giftName").value.trim();
-      const priority = document.getElementById("giftPriority").value;
-      const price = document.getElementById("giftPrice").value.trim();
-      if (!name || !price) return alert("Please fill out all fields!");
-      addGift(currentGiver, name, priority, price);
-      document.getElementById("giftName").value = "";
-      document.getElementById("giftPrice").value = "";
-    }
+  if (!name) return alert("Enter a gift name!");
 
-    function initTabs() {
-      givers.forEach(g => {
-        const tab = document.createElement("div");
-        tab.className = "tab";
-        tab.textContent = g;
-        tab.onclick = () => showGifts(g);
-        tabsDiv.appendChild(tab);
-      });
-      showGifts(givers[0]);
-      loadGifts();
-    }
+  const gift = { action: "add", Giver: currentGiver, "Gift Name": name, Priority: priority, Price: price };
+  await fetch(SHEET_URL, { method: "POST", body: JSON.stringify(gift) });
+  await fetchGifts();
+  renderGiftForm();
+}
 
-    initTabs();
-  </script>
+async function deleteGift(name) {
+  const payload = { action: "delete", Giver: currentGiver, "Gift Name": name };
+  await fetch(SHEET_URL, { method: "POST", body: JSON.stringify(payload) });
+  await fetchGifts();
+  renderGiftForm();
+}
+
+(async () => {
+  await fetchGifts();
+  renderTabs();
+})();
+</script>
 
 </body>
 </html>
+
 
 
 
