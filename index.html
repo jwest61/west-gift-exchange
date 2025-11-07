@@ -58,15 +58,21 @@
     text-align: center;
   }
 
-  .tab-buttons {
+  .tab-row {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 15px;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
   }
 
-  .tab-buttons button {
+  .tab-row label {
+    font-weight: bold;
+    margin-right: 10px;
+    align-self: center;
+  }
+
+  .tab-row button {
     padding: 8px 14px;
     border: none;
     background-color: #3cb371;
@@ -75,7 +81,7 @@
     cursor: pointer;
   }
 
-  .tab-buttons button.active {
+  .tab-row button.active {
     background-color: #2e8b57;
   }
 
@@ -109,11 +115,17 @@
     cursor: pointer;
   }
 
-  input, select {
+  input, select, textarea {
     margin: 4px;
     padding: 6px;
     border: 1px solid #aaa;
     border-radius: 4px;
+    width: 220px;
+  }
+
+  textarea {
+    width: 90%;
+    height: 70px;
   }
 
   button.add-btn {
@@ -123,6 +135,12 @@
     padding: 7px 12px;
     border-radius: 6px;
     cursor: pointer;
+  }
+
+  .section-divider {
+    border-top: 2px solid #3cb371;
+    margin-top: 20px;
+    padding-top: 10px;
   }
 </style>
 </head>
@@ -166,7 +184,12 @@
 
   <!-- RIGHT SIDE: Tabs -->
   <div class="tabs">
-    <div class="tab-buttons" id="tabButtons"></div>
+    <div class="tab-row" id="row1">
+      <label>Adults:</label>
+    </div>
+    <div class="tab-row" id="row2">
+      <label>Kids:</label>
+    </div>
     <div class="tab-content" id="tabContent">
       <p>Select a giver to view or add gifts.</p>
     </div>
@@ -175,7 +198,8 @@
 
 <script>
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbw7ouiHoNqOHdM6IJsQrynNkyjkHg-2owdKmpyCAcoyyfd6Aspr3k9w6AiBZPsCslN38w/exec";
-const givers = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff","Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+const adults = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff"];
+const kids = ["Eddie","Evie","Gwen","Claire","Main","Theo","Elora","Eden","Nora"];
 let currentGiver = null;
 let allGifts = [];
 
@@ -185,19 +209,27 @@ async function fetchGifts() {
 }
 
 function renderTabs() {
-  const container = document.getElementById("tabButtons");
-  container.innerHTML = "";
-  givers.forEach(giver => {
+  const row1 = document.getElementById("row1");
+  const row2 = document.getElementById("row2");
+
+  adults.forEach(giver => {
     const btn = document.createElement("button");
     btn.textContent = giver;
     btn.onclick = () => openTab(giver, btn);
-    container.appendChild(btn);
+    row1.appendChild(btn);
+  });
+
+  kids.forEach(giver => {
+    const btn = document.createElement("button");
+    btn.textContent = giver;
+    btn.onclick = () => openTab(giver, btn);
+    row2.appendChild(btn);
   });
 }
 
 function openTab(giver, btn) {
   currentGiver = giver;
-  document.querySelectorAll(".tab-buttons button").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".tab-row button").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   renderGiftForm();
 }
@@ -215,9 +247,16 @@ function renderGiftForm() {
         <option value="Low">Low</option>
       </select>
       <input id="price" placeholder="Price $" type="number" min="0"/>
+      <input id="giftUrl" placeholder="Gift URL (optional)" />
+      <input id="notes" placeholder="Notes (optional)" />
       <button class="add-btn" onclick="addGift()">Add Gift</button>
     </div>
     <div class="gift-list" id="giftList"></div>
+    <div class="section-divider">
+      <h3>Stocking Ideas</h3>
+      <textarea id="stockingText" placeholder="Enter stocking ideas here..."></textarea><br>
+      <button class="add-btn" onclick="saveStocking()">Save Stocking Ideas</button>
+    </div>
   `;
   renderGiftList(gifts);
 }
@@ -226,10 +265,12 @@ function renderGiftList(gifts) {
   const list = document.getElementById("giftList");
   list.innerHTML = "";
   gifts.forEach(g => {
+    const url = g["Gift URL"] ? `<a href="${g["Gift URL"]}" target="_blank">🔗</a>` : "";
+    const notes = g["Notes"] ? ` (${g["Notes"]})` : "";
     const item = document.createElement("div");
     item.className = "gift-item";
     item.innerHTML = `
-      <span>${g["Gift Name"]} — ${g.Priority} — $${g.Price}</span>
+      <span>${g["Gift Name"]} — ${g.Priority} — $${g.Price} ${url}${notes}</span>
       <button onclick="deleteGift('${g["Gift Name"]}')">Remove</button>
     `;
     list.appendChild(item);
@@ -240,10 +281,12 @@ async function addGift() {
   const name = document.getElementById("giftName").value.trim();
   const priority = document.getElementById("priority").value;
   const price = document.getElementById("price").value.trim();
+  const url = document.getElementById("giftUrl").value.trim();
+  const notes = document.getElementById("notes").value.trim();
 
   if (!name) return alert("Enter a gift name!");
 
-  const gift = { action: "add", Giver: currentGiver, "Gift Name": name, Priority: priority, Price: price };
+  const gift = { action: "add", Giver: currentGiver, "Gift Name": name, Priority: priority, Price: price, "Gift URL": url, "Notes": notes };
   await fetch(SHEET_URL, { method: "POST", body: JSON.stringify(gift) });
   await fetchGifts();
   renderGiftForm();
@@ -256,6 +299,13 @@ async function deleteGift(name) {
   renderGiftForm();
 }
 
+async function saveStocking() {
+  const text = document.getElementById("stockingText").value.trim();
+  const payload = { action: "stocking", Giver: currentGiver, "Notes": text };
+  await fetch(SHEET_URL, { method: "POST", body: JSON.stringify(payload) });
+  alert("Stocking ideas saved!");
+}
+
 (async () => {
   await fetchGifts();
   renderTabs();
@@ -264,6 +314,7 @@ async function deleteGift(name) {
 
 </body>
 </html>
+
 
 
 
