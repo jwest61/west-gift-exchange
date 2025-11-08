@@ -68,6 +68,7 @@
     padding: 8px 16px;
     cursor: pointer;
     font-weight: 600;
+    white-space: nowrap;
   }
   .tab.active {
     background: #146c43;
@@ -166,123 +167,124 @@
 </div>
 
 <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbwP_Tbu9_QuDMm6onR0fvri-byDwspixqDClvnTPU2NC1R7SE01pPlORnQoQWKczorsrg/exec"; // Replace with your Apps Script URL
+document.addEventListener("DOMContentLoaded", () => {
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwP_Tbu9_QuDMm6onR0fvri-byDwspixqDClvnTPU2NC1R7SE01pPlORnQoQWKczorsrg/exec"; // Replace with your Apps Script URL
 
-const adults = ["Jon","Katie","Dave","Jason","Karen","Chelsea","Jen","Stef","Dan","Geoff"];
-const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
-const people = [...adults, ...kids];
+  const adults = ["Jon","Katie","Dave","Jason","Karen","Chelsea","Jen","Stef","Dan","Geoff"];
+  const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+  const people = [...adults, ...kids];
+  let data = {};
 
-let data = {};
+  async function loadData() {
+    const res = await fetch(`${scriptURL}?t=${Date.now()}`);
+    data = await res.json();
+    renderTabs();
+  }
 
-async function loadData() {
-  const res = await fetch(`${scriptURL}?t=${Date.now()}`);
-  data = await res.json();
-  renderTabs();
-}
+  function renderTabs() {
+    const tabContainer = document.getElementById("tabs");
+    tabContainer.innerHTML = "";
 
-function renderTabs() {
-  const tabContainer = document.getElementById("tabs");
-  tabContainer.innerHTML = "";
+    // Adults row
+    adults.forEach(p => {
+      const tab = document.createElement("div");
+      tab.className = "tab";
+      tab.textContent = p;
+      tab.onclick = () => selectPerson(p);
+      tabContainer.appendChild(tab);
+    });
 
-  // Adults row
-  adults.forEach(p => {
-    const tab = document.createElement("div");
-    tab.className = "tab";
-    tab.textContent = p;
-    tab.onclick = () => selectPerson(p);
-    tabContainer.appendChild(tab);
-  });
+    // Spacer for new row
+    const br = document.createElement("div");
+    br.style.flexBasis = "100%";
+    tabContainer.appendChild(br);
 
-  // Spacer
-  const br = document.createElement("div");
-  br.style.flexBasis = "100%";
-  tabContainer.appendChild(br);
+    // Kids row
+    kids.forEach(p => {
+      const tab = document.createElement("div");
+      tab.className = "tab";
+      tab.textContent = p;
+      tab.onclick = () => selectPerson(p);
+      tabContainer.appendChild(tab);
+    });
 
-  // Kids row
-  kids.forEach(p => {
-    const tab = document.createElement("div");
-    tab.className = "tab";
-    tab.textContent = p;
-    tab.onclick = () => selectPerson(p);
-    tabContainer.appendChild(tab);
-  });
+    selectPerson(people[0]);
+  }
 
-  selectPerson(people[0]);
-}
+  function selectPerson(person) {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    [...document.querySelectorAll(".tab")].find(t => t.textContent === person).classList.add("active");
 
-function selectPerson(person) {
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  [...document.querySelectorAll(".tab")].find(t => t.textContent === person).classList.add("active");
+    const c = document.getElementById("content");
+    const pData = data[person] || { gifts: [], stocking: "" };
 
-  const c = document.getElementById("content");
-  const pData = data[person] || { gifts: [], stocking: "" };
+    c.innerHTML = `
+      <div class="gift-inputs">
+        <input id="giftName" placeholder="Gift name" />
+        <input id="priority" placeholder="Priority" style="width:80px"/>
+        <input id="price" type="number" placeholder="Price" style="width:80px"/>
+        <input id="url" placeholder="URL" />
+        <textarea id="notes" placeholder="Notes" rows="1"></textarea>
+        <button onclick="addGift('${person}')">Add Gift</button>
+      </div>
 
-  c.innerHTML = `
-    <div class="gift-inputs">
-      <input id="giftName" placeholder="Gift name" />
-      <input id="priority" placeholder="Priority" style="width:80px"/>
-      <input id="price" type="number" placeholder="Price" style="width:80px"/>
-      <input id="url" placeholder="URL" />
-      <textarea id="notes" placeholder="Notes" rows="1"></textarea>
-      <button onclick="addGift('${person}')">Add Gift</button>
-    </div>
+      <h3>Gifts for ${person}</h3>
+      <table>
+        <tr><th>Name</th><th>Priority</th><th>Price</th><th>Notes</th><th>Link</th><th></th></tr>
+        ${pData.gifts.map(g => `
+          <tr>
+            <td>${g.name}</td>
+            <td>${g.priority}</td>
+            <td>${g.price}</td>
+            <td>${g.notes}</td>
+            <td>${g.url ? `<a href="${g.url}" target="_blank">Link</a>` : ""}</td>
+            <td><button onclick="removeGift('${person}','${g.name}')">❌</button></td>
+          </tr>
+        `).join("")}
+      </table>
 
-    <h3>Gifts for ${person}</h3>
-    <table>
-      <tr><th>Name</th><th>Priority</th><th>Price</th><th>Notes</th><th>Link</th><th></th></tr>
-      ${pData.gifts.map(g => `
-        <tr>
-          <td>${g.name}</td>
-          <td>${g.priority}</td>
-          <td>${g.price}</td>
-          <td>${g.notes}</td>
-          <td>${g.url ? `<a href="${g.url}" target="_blank">Link</a>` : ""}</td>
-          <td><button onclick="removeGift('${person}','${g.name}')">❌</button></td>
-        </tr>
-      `).join("")}
-    </table>
+      <h3 style="margin-top:25px;">Stocking Idea</h3>
+      <textarea id="stockingIdea" rows="3" style="width:100%;">${pData.stocking || ""}</textarea><br>
+      <button onclick="saveStocking('${person}')">Save Stocking Idea</button>
+    `;
+  }
 
-    <h3 style="margin-top:25px;">Stocking Idea</h3>
-    <textarea id="stockingIdea" rows="3" style="width:100%;">${pData.stocking || ""}</textarea><br>
-    <button onclick="saveStocking('${person}')">Save Stocking Idea</button>
-  `;
-}
+  async function addGift(person) {
+    const gift = {
+      name: document.getElementById("giftName").value.trim(),
+      priority: document.getElementById("priority").value.trim(),
+      price: document.getElementById("price").value.trim(),
+      url: document.getElementById("url").value.trim(),
+      notes: document.getElementById("notes").value.trim()
+    };
+    if (!gift.name) return alert("Please enter a gift name");
 
-async function addGift(person) {
-  const gift = {
-    name: document.getElementById("giftName").value.trim(),
-    priority: document.getElementById("priority").value.trim(),
-    price: document.getElementById("price").value.trim(),
-    url: document.getElementById("url").value.trim(),
-    notes: document.getElementById("notes").value.trim()
-  };
-  if (!gift.name) return alert("Please enter a gift name");
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify({ action: "addGift", person, gift })
+    });
+    loadData();
+  }
 
-  await fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify({ action: "addGift", person, gift })
-  });
+  async function removeGift(person, name) {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify({ action: "removeGift", person, name })
+    });
+    loadData();
+  }
+
+  async function saveStocking(person) {
+    const stocking = document.getElementById("stockingIdea").value.trim();
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify({ action: "saveStocking", person, stocking })
+    });
+    alert("Stocking idea saved!");
+  }
+
   loadData();
-}
-
-async function removeGift(person, name) {
-  await fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify({ action: "removeGift", person, name })
-  });
-  loadData();
-}
-
-async function saveStocking(person) {
-  const stocking = document.getElementById("stockingIdea").value.trim();
-  await fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify({ action: "saveStocking", person, stocking })
-  });
-  alert("Stocking idea saved!");
-}
-
-loadData();
+});
 </script>
 </body>
 </html>
