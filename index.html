@@ -3,86 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎄 West Family Gift Exchange</title>
+  <title>West Family Gift Exchange 🎄</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      display: flex;
-      background-color: #f5f7f5;
+      font-family: 'Arial', sans-serif;
+      background-color: #f9fff9;
       color: #333;
+      margin: 0;
+      padding: 0;
     }
 
-    .left-column {
-      width: 260px;
-      background-color: #e8f5e9;
-      padding: 20px;
-      border-right: 2px solid #a5d6a7;
+    h1 {
       text-align: center;
-    }
-
-    .tree {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-
-    .group-title {
-      font-weight: bold;
-      color: #2e7d32;
-      margin-top: 20px;
-      margin-bottom: 8px;
-      text-align: left;
-    }
-
-    .pair-table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #f0fdf4;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .pair-table td {
-      padding: 6px 8px;
-      border-bottom: 1px solid #c8e6c9;
-      text-align: left;
-    }
-
-    .content {
-      flex: 1;
-      padding: 20px;
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-      gap: 5px;
-      justify-content: center;
-    }
-
-    .tab {
-      padding: 8px 14px;
-      background-color: #c8e6c9;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      background-color: #81c784;
+      background-color: #2e8b57;
       color: white;
+      padding: 20px;
+      margin: 0;
     }
 
-    .tab-content {
-      display: none;
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px;
+      gap: 40px;
     }
 
-    .tab-content.active {
-      display: block;
+    .pairings {
+      background: #e8f5e9;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+
+    .pairings h2 {
+      text-align: center;
+      color: #2e8b57;
     }
 
     table {
@@ -92,248 +49,216 @@
     }
 
     th, td {
-      border-bottom: 1px solid #ddd;
-      padding: 6px;
+      border: 1px solid #c8e6c9;
+      padding: 8px;
       text-align: left;
     }
 
     th {
-      background-color: #e8f5e9;
+      background-color: #a5d6a7;
+    }
+
+    .gift-section {
+      flex: 1;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #2e8b57;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      background: #c8e6c9;
+      border-radius: 12px 12px 0 0;
+      margin-right: 5px;
+    }
+
+    .tab.active {
+      background: #2e8b57;
+      color: white;
+      font-weight: bold;
+    }
+
+    .gift-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .gift-table th, .gift-table td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: left;
+    }
+
+    .add-gift {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
     }
 
     input, textarea {
       padding: 6px;
-      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
 
-    input {
-      height: 30px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 80px;
-      resize: vertical;
-      margin-top: 5px;
-    }
-
-    .gift-input-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-
-    .gift-input-row input {
+    input[type="text"], input[type="number"], textarea {
       flex: 1;
     }
 
-    .gift-input-row button {
-      flex-shrink: 0;
+    .notes-box {
+      flex-basis: 100%;
+      height: 50px;
     }
 
     button {
-      padding: 6px 10px;
-      background-color: #66bb6a;
+      background: #2e8b57;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
+      padding: 8px 14px;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #57a05b;
+      background: #256c45;
     }
 
-    h3 {
-      color: #2e7d32;
+    .tree {
+      text-align: center;
+      font-size: 50px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="left-column">
-    <div class="tree">🎄</div>
-    <h2>Gift Pairings</h2>
+  <h1>West Family Gift Exchange 🎁</h1>
 
-    <div class="group-title">Adults</div>
-    <table class="pair-table">
-      <tr><td>Jon → Katie</td></tr>
-      <tr><td>Dave → Jason</td></tr>
-      <tr><td>Karen → Chelsea</td></tr>
-      <tr><td>Jen → Stef</td></tr>
-      <tr><td>Dan → Jon</td></tr>
-      <tr><td>Jason → Dave</td></tr>
-      <tr><td>Stef → Geoff</td></tr>
-      <tr><td>Katie → Dan</td></tr>
-      <tr><td>Chelsea → Jen</td></tr>
-      <tr><td>Geoff → Karen</td></tr>
-    </table>
-
-    <div class="group-title">Kids</div>
-    <table class="pair-table">
-      <tr><td>Eddie → Gwen</td></tr>
-      <tr><td>Gwen → Evie</td></tr>
-      <tr><td>Evie → Claire</td></tr>
-      <tr><td>Claire → Eddie</td></tr>
-      <tr><td>Main → Theo</td></tr>
-      <tr><td>Theo → Elora</td></tr>
-      <tr><td>Elora → Main</td></tr>
-      <tr><td>Eden → Nora</td></tr>
-      <tr><td>Nora → Eden</td></tr>
-    </table>
-  </div>
-
-  <div class="content">
-    <div class="tabs">
-      <div class="tab" data-person="Jon">Jon</div>
-      <div class="tab" data-person="Dave">Dave</div>
-      <div class="tab" data-person="Karen">Karen</div>
-      <div class="tab" data-person="Jen">Jen</div>
-      <div class="tab" data-person="Dan">Dan</div>
-      <div class="tab" data-person="Jason">Jason</div>
-      <div class="tab" data-person="Stef">Stef</div>
-      <div class="tab" data-person="Katie">Katie</div>
-      <div class="tab" data-person="Chelsea">Chelsea</div>
-      <div class="tab" data-person="Geoff">Geoff</div>
-    </div>
-    <div class="tabs">
-      <div class="tab" data-person="Eddie">Eddie</div>
-      <div class="tab" data-person="Gwen">Gwen</div>
-      <div class="tab" data-person="Evie">Evie</div>
-      <div class="tab" data-person="Claire">Claire</div>
-      <div class="tab" data-person="Main">Main</div>
-      <div class="tab" data-person="Theo">Theo</div>
-      <div class="tab" data-person="Elora">Elora</div>
-      <div class="tab" data-person="Eden">Eden</div>
-      <div class="tab" data-person="Nora">Nora</div>
+  <div class="container">
+    <div class="pairings">
+      <div class="tree">🎄</div>
+      <h2>Pairings</h2>
+      <table id="pairingTable">
+        <thead><tr><th>Name</th><th>Buys For</th></tr></thead>
+        <tbody></tbody>
+      </table>
     </div>
 
-    <div id="tab-contents"></div>
+    <div class="gift-section">
+      <div class="tabs" id="tabs"></div>
+      <div id="content"></div>
+    </div>
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzzml3RK379PTulyXS9bgP9gbSHKJq8yy3_e1of6IrqJA-Cp4HGJhLqOsO90N5nqtv69A/exec";
-    const people = [
-      "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
-      "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
-    ];
-
-    const tabContents = document.getElementById("tab-contents");
-
-    // Build each person's tab content
-    people.forEach(person => {
-      const div = document.createElement("div");
-      div.classList.add("tab-content");
-      div.id = `content-${person}`;
-      div.innerHTML = `
-        <h3>${person}'s Gift List</h3>
-        <div class="gift-input-row">
-          <input id="giftName-${person}" placeholder="Gift name" />
-          <input id="giftPriority-${person}" placeholder="Priority" style="width:80px;" />
-          <input id="giftPrice-${person}" placeholder="Price" style="width:80px;" />
-          <input id="giftURL-${person}" placeholder="Product URL (optional)" />
-          <input id="giftNotes-${person}" placeholder="Notes (optional)" style="flex:2;" />
-          <button onclick="addGift('${person}')">Add Gift</button>
-        </div>
-
-        <table id="giftTable-${person}">
-          <tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th>Remove</th></tr>
-        </table>
-
-        <h3>Stocking Ideas</h3>
-        <textarea id="stocking-${person}" placeholder="Add stocking ideas..."></textarea>
-        <button onclick="saveStocking('${person}')">Save Stocking Ideas</button>
-      `;
-      tabContents.appendChild(div);
-    });
-
-    // Tab switching
-    document.querySelectorAll(".tab").forEach(tab => {
-      tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        tab.classList.add("active");
-        document.getElementById(`content-${tab.dataset.person}`).classList.add("active");
-      });
-    });
-
-    async function addGift(person) {
-      const name = document.getElementById(`giftName-${person}`).value.trim();
-      const priority = document.getElementById(`giftPriority-${person}`).value.trim();
-      const price = document.getElementById(`giftPrice-${person}`).value.trim();
-      const url = document.getElementById(`giftURL-${person}`).value.trim();
-      const notes = document.getElementById(`giftNotes-${person}`).value.trim();
-      if (!name) return alert("Please enter a gift name.");
-
-      const gift = { person, name, priority, price, url, notes };
-
-      await fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify({ action: "addGift", gift, person }),
-      });
-
-      renderGift(person, gift);
-
-      document.getElementById(`giftName-${person}`).value = "";
-      document.getElementById(`giftPriority-${person}`).value = "";
-      document.getElementById(`giftPrice-${person}`).value = "";
-      document.getElementById(`giftURL-${person}`).value = "";
-      document.getElementById(`giftNotes-${person}`).value = "";
-    }
-
-    function renderGift(person, gift) {
-      const table = document.getElementById(`giftTable-${person}`);
-      const row = document.createElement("tr");
-      const fullURL = gift.url
-        ? (gift.url.startsWith("http") ? gift.url : `https://${gift.url}`)
-        : "";
-      const linkHTML = fullURL ? `<a href="${fullURL}" target="_blank">View</a>` : "";
-
-      row.innerHTML = `
-        <td>${gift.name}</td>
-        <td>${gift.priority}</td>
-        <td>${gift.price}</td>
-        <td>${linkHTML}</td>
-        <td>${gift.notes || ""}</td>
-        <td><button onclick="removeGift('${person}', '${gift.name}', this)">Remove</button></td>
-      `;
-      table.appendChild(row);
-    }
-
-    async function removeGift(person, giftName, btn) {
-  const response = await fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify({ action: "removeGift", person, name: giftName }),
-  });
-  const text = await response.text();
-
-  if (text.includes("Gift removed")) {
-    btn.closest("tr").remove();
-  } else {
-    alert("Could not remove gift (not found in sheet).");
-  }
-}
-
-    async function saveStocking(person) {
-      const stocking = document.getElementById(`stocking-${person}`).value;
-      await fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify({ action: "saveStocking", person, stocking }),
-      });
-      alert("Stocking ideas saved!");
-    }
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
+    let data = {};
+    let currentPerson = "";
 
     async function loadData() {
       const res = await fetch(`${scriptURL}?action=getData`);
-      const data = await res.json();
+      data = await res.json();
+      renderTabs();
+      const firstPerson = Object.keys(data)[0];
+      if (firstPerson) showPerson(firstPerson);
+    }
+
+    function renderTabs() {
+      const tabs = document.getElementById("tabs");
+      tabs.innerHTML = "";
       Object.keys(data).forEach(person => {
-        if (data[person].gifts) {
-          data[person].gifts.forEach(g => renderGift(person, g));
-        }
-        if (data[person].stocking && document.getElementById(`stocking-${person}`)) {
-          document.getElementById(`stocking-${person}`).value = data[person].stocking;
-        }
+        const tab = document.createElement("div");
+        tab.className = "tab" + (person === currentPerson ? " active" : "");
+        tab.textContent = person;
+        tab.onclick = () => showPerson(person);
+        tabs.appendChild(tab);
       });
+    }
+
+    function showPerson(person) {
+      currentPerson = person;
+      renderTabs();
+      const div = document.getElementById("content");
+      const personData = data[person] || { gifts: [], stocking: "" };
+
+      let html = `
+        <table class="gift-table">
+          <thead><tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th></th></tr></thead>
+          <tbody>
+            ${personData.gifts.map(g => `
+              <tr>
+                <td>${g.name}</td>
+                <td>${g.priority}</td>
+                <td>${g.price}</td>
+                <td>${g.url ? `<a href="${formatURL(g.url)}" target="_blank">Link</a>` : ""}</td>
+                <td>${g.notes || ""}</td>
+                <td><button onclick="removeGift('${person}','${g.name}', this)">Remove</button></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+
+        <div class="add-gift">
+          <input id="giftName" placeholder="Gift name" />
+          <input id="giftPriority" placeholder="Priority" style="width:80px;" />
+          <input id="giftPrice" placeholder="Price" style="width:80px;" />
+          <input id="giftURL" placeholder="URL" />
+          <textarea id="giftNotes" class="notes-box" placeholder="Notes..."></textarea>
+          <button onclick="addGift('${person}')">Add Gift</button>
+        </div>
+      `;
+      div.innerHTML = html;
+    }
+
+    function formatURL(url) {
+      if (!url) return "";
+      if (url.startsWith("http://") || url.startsWith("https://")) return url;
+      return "https://" + url;
+    }
+
+    async function addGift(person) {
+      const gift = {
+        name: document.getElementById("giftName").value.trim(),
+        priority: document.getElementById("giftPriority").value.trim(),
+        price: document.getElementById("giftPrice").value.trim(),
+        url: document.getElementById("giftURL").value.trim(),
+        notes: document.getElementById("giftNotes").value.trim(),
+      };
+
+      if (!gift.name) return alert("Please enter a gift name");
+
+      const res = await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({ action: "addGift", person, gift })
+      });
+
+      if (res.ok) {
+        data[person].gifts.push(gift);
+        showPerson(person);
+      } else {
+        alert("Failed to sync with Google Sheets");
+      }
+    }
+
+    async function removeGift(person, giftName, btn) {
+      const res = await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({ action: "removeGift", person, name: giftName })
+      });
+      const text = await res.text();
+      if (text.includes("Gift removed")) {
+        btn.closest("tr").remove();
+      } else {
+        alert("Could not remove gift from Google Sheets");
+      }
     }
 
     loadData();
