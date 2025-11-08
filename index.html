@@ -8,26 +8,64 @@
   body {
     font-family: 'Poppins', sans-serif;
     background: #f9fafb;
-    text-align: center;
     margin: 0;
     padding: 0;
   }
   h1 {
     color: #146c43;
-    margin-top: 20px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding-bottom: 40px;
+  }
+  /* Left Column: Pairings */
+  .left-column {
+    min-width: 220px;
+  }
+  .left-column h2 {
+    color: #146c43;
+    margin-bottom: 5px;
+  }
+  .pairings-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #d1e7dd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .pairings-table th, .pairings-table td {
+    padding: 6px;
+    border-bottom: 1px solid #146c43;
+    text-align: left;
+  }
+  .pairings-table th {
+    background: #146c43;
+    color: white;
+  }
+
+  /* Right Column: Tabs & Content */
+  .right-column {
+    flex: 1;
+    max-width: 750px;
   }
   .tabs {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    margin-top: 20px;
+    justify-content: center;
     gap: 10px;
+    margin-bottom: 20px;
   }
   .tab {
     background: #d1e7dd;
     border: 2px solid #146c43;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 8px 16px;
     cursor: pointer;
     font-weight: 600;
   }
@@ -36,11 +74,9 @@
     color: white;
   }
   .content {
-    margin: 30px auto;
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    max-width: 700px;
     padding: 20px;
     text-align: left;
   }
@@ -50,13 +86,13 @@
     gap: 10px;
     margin-bottom: 20px;
   }
-  input, textarea {
+  .gift-inputs input, .gift-inputs textarea {
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 6px;
     flex: 1;
   }
-  input[type="number"] {
+  .gift-inputs input[type="number"] {
     width: 80px;
   }
   button {
@@ -86,15 +122,56 @@
 </style>
 </head>
 <body>
+
 <h1>🎄 West Family Gift Exchange 🎁</h1>
 
-<div class="tabs" id="tabs"></div>
-<div id="content"></div>
+<div class="container">
+  <!-- LEFT: Pairings -->
+  <div class="left-column">
+    <h2>Adults</h2>
+    <table class="pairings-table">
+      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><td>Jon</td><td>Katie</td></tr>
+      <tr><td>Dave</td><td>Jason</td></tr>
+      <tr><td>Karen</td><td>Chelsea</td></tr>
+      <tr><td>Jen</td><td>Stef</td></tr>
+      <tr><td>Dan</td><td>Jon</td></tr>
+      <tr><td>Jason</td><td>Dave</td></tr>
+      <tr><td>Stef</td><td>Geoff</td></tr>
+      <tr><td>Katie</td><td>Dan</td></tr>
+      <tr><td>Chelsea</td><td>Jen</td></tr>
+      <tr><td>Geoff</td><td>Karen</td></tr>
+    </table>
+
+    <h2>Kids</h2>
+    <table class="pairings-table">
+      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><td>Eddie</td><td>Gwen</td></tr>
+      <tr><td>Gwen</td><td>Evie</td></tr>
+      <tr><td>Evie</td><td>Claire</td></tr>
+      <tr><td>Claire</td><td>Eddie</td></tr>
+      <tr><td>Main</td><td>Theo</td></tr>
+      <tr><td>Theo</td><td>Elora</td></tr>
+      <tr><td>Elora</td><td>Main</td></tr>
+      <tr><td>Eden</td><td>Nora</td></tr>
+      <tr><td>Nora</td><td>Eden</td></tr>
+    </table>
+  </div>
+
+  <!-- RIGHT: Tabs & Content -->
+  <div class="right-column">
+    <div class="tabs" id="tabs"></div>
+    <div id="content" class="content"></div>
+  </div>
+</div>
 
 <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbwP_Tbu9_QuDMm6onR0fvri-byDwspixqDClvnTPU2NC1R7SE01pPlORnQoQWKczorsrg/exec";
+const scriptURL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE"; // Replace with your Apps Script URL
 
-const people = ["Jon", "Katie", "Dave", "Jason", "Karen", "Chelsea", "Jen", "Stef", "Dan", "Geoff", "Eddie", "Gwen", "Evie", "Claire", "Main", "Theo", "Elora", "Eden", "Nora"];
+const adults = ["Jon","Katie","Dave","Jason","Karen","Chelsea","Jen","Stef","Dan","Geoff"];
+const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+const people = [...adults, ...kids];
+
 let data = {};
 
 async function loadData() {
@@ -106,13 +183,30 @@ async function loadData() {
 function renderTabs() {
   const tabContainer = document.getElementById("tabs");
   tabContainer.innerHTML = "";
-  people.forEach(p => {
+
+  // Adults row
+  adults.forEach(p => {
     const tab = document.createElement("div");
     tab.className = "tab";
     tab.textContent = p;
     tab.onclick = () => selectPerson(p);
     tabContainer.appendChild(tab);
   });
+
+  // Spacer
+  const br = document.createElement("div");
+  br.style.flexBasis = "100%";
+  tabContainer.appendChild(br);
+
+  // Kids row
+  kids.forEach(p => {
+    const tab = document.createElement("div");
+    tab.className = "tab";
+    tab.textContent = p;
+    tab.onclick = () => selectPerson(p);
+    tabContainer.appendChild(tab);
+  });
+
   selectPerson(people[0]);
 }
 
@@ -143,7 +237,7 @@ function selectPerson(person) {
           <td>${g.price}</td>
           <td>${g.notes}</td>
           <td>${g.url ? `<a href="${g.url}" target="_blank">Link</a>` : ""}</td>
-          <td><button onclick="removeGift('${person}', '${g.name}')">❌</button></td>
+          <td><button onclick="removeGift('${person}','${g.name}')">❌</button></td>
         </tr>
       `).join("")}
     </table>
@@ -187,6 +281,7 @@ async function saveStocking(person) {
   });
   alert("Stocking idea saved!");
 }
+
 loadData();
 </script>
 </body>
