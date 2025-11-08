@@ -212,7 +212,7 @@
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzzml3RK379PTulyXS9bgP9gbSHKJq8yy3_e1of6IrqJA-Cp4HGJhLqOsO90N5nqtv69A/exec";
     const people = [
       "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
       "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
@@ -301,12 +301,18 @@
     }
 
     async function removeGift(person, giftName, btn) {
-      btn.closest("tr").remove();
-      await fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify({ action: "removeGift", person, name: giftName }),
-      });
-    }
+  const response = await fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify({ action: "removeGift", person, name: giftName }),
+  });
+  const text = await response.text();
+
+  if (text.includes("Gift removed")) {
+    btn.closest("tr").remove();
+  } else {
+    alert("Could not remove gift (not found in sheet).");
+  }
+}
 
     async function saveStocking(person) {
       const stocking = document.getElementById(`stocking-${person}`).value;
