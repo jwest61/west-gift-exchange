@@ -3,62 +3,137 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>West Family Gift Exchange 🎁</title>
+<title>West Family Gift Exchange 🎄</title>
 <style>
   body {
     font-family: 'Poppins', sans-serif;
     background: #f9fafb;
-    text-align: center;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
+
   h1 {
     color: #146c43;
+    text-align: center;
     margin-top: 20px;
   }
-  .tabs {
+
+  .container {
+    display: flex;
+    margin: 30px;
+    gap: 40px;
+    width: 90%;
+    max-width: 1200px;
+  }
+
+  /* Pairings table */
+  .pairings {
+    flex: 1;
+    background: #d1e7dd;
+    border-radius: 12px;
+    padding: 15px;
+    max-width: 250px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    height: fit-content;
+  }
+
+  .pairings h2 {
+    text-align: center;
+    color: #0f5132;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background: #198754;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background: #f6fff9;
+  }
+
+  /* Main content area */
+  .main-content {
+    flex: 3;
+  }
+
+  .tabs-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .tab-row {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 20px;
-    gap: 10px;
+    gap: 8px;
+    margin: 10px 0;
   }
+
   .tab {
     background: #d1e7dd;
     border: 2px solid #146c43;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 8px 16px;
     cursor: pointer;
     font-weight: 600;
+    transition: 0.2s;
   }
+
+  .tab:hover {
+    background: #bcd0c7;
+  }
+
   .tab.active {
     background: #146c43;
     color: white;
   }
+
   .content {
-    margin: 30px auto;
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    max-width: 700px;
-    padding: 20px;
-    text-align: left;
+    padding: 25px;
   }
+
   .gift-inputs {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 20px;
   }
+
   input, textarea {
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 6px;
-    flex: 1;
+    font-family: inherit;
   }
+
+  textarea {
+    flex: 1 1 100%;
+  }
+
   input[type="number"] {
     width: 80px;
   }
+
   button {
     background: #146c43;
     color: white;
@@ -67,34 +142,98 @@
     padding: 8px 14px;
     cursor: pointer;
     font-weight: 600;
+    transition: 0.2s;
   }
+
   button:hover {
     background: #0f5132;
   }
-  table {
+
+  .gift-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
   }
-  th, td {
-    padding: 8px;
+
+  .gift-table th, .gift-table td {
+    padding: 10px;
     border-bottom: 1px solid #e9ecef;
   }
+
+  .gift-table tr:nth-child(even) {
+    background: #f8f9fa;
+  }
+
   a {
     color: #0d6efd;
   }
+
+  .section-divider {
+    margin: 25px 0 15px;
+    border-top: 2px solid #d1e7dd;
+  }
+
+  .stocking-box {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+  }
+
 </style>
 </head>
 <body>
-<h1>🎄 West Family Gift Exchange 🎁</h1>
+<div class="container">
+  <!-- Pairings -->
+  <div class="pairings">
+    <h2>🎁 Pairings</h2>
+    <table>
+      <tr><th colspan="2">Adults</th></tr>
+      <tr><td>Jon</td><td>Katie</td></tr>
+      <tr><td>Dave</td><td>Jason</td></tr>
+      <tr><td>Karen</td><td>Chelsea</td></tr>
+      <tr><td>Jen</td><td>Stef</td></tr>
+      <tr><td>Dan</td><td>Jon</td></tr>
+      <tr><td>Jason</td><td>Dave</td></tr>
+      <tr><td>Stef</td><td>Geoff</td></tr>
+      <tr><td>Katie</td><td>Dan</td></tr>
+      <tr><td>Chelsea</td><td>Jen</td></tr>
+      <tr><td>Geoff</td><td>Karen</td></tr>
+      <tr><th colspan="2">Kids</th></tr>
+      <tr><td>Eddie</td><td>Gwen</td></tr>
+      <tr><td>Gwen</td><td>Evie</td></tr>
+      <tr><td>Evie</td><td>Claire</td></tr>
+      <tr><td>Claire</td><td>Eddie</td></tr>
+      <tr><td>Main</td><td>Theo</td></tr>
+      <tr><td>Theo</td><td>Elora</td></tr>
+      <tr><td>Elora</td><td>Main</td></tr>
+      <tr><td>Eden</td><td>Nora</td></tr>
+      <tr><td>Nora</td><td>Eden</td></tr>
+    </table>
+  </div>
 
-<div class="tabs" id="tabs"></div>
-<div id="content"></div>
+  <!-- Main content -->
+  <div class="main-content">
+    <h1>West Family Gift Exchange 🎄</h1>
+
+    <div class="tabs-section">
+      <div><strong>Adults</strong></div>
+      <div class="tab-row" id="adultTabs"></div>
+
+      <div style="margin-top: 15px;"><strong>Kids</strong></div>
+      <div class="tab-row" id="kidTabs"></div>
+    </div>
+
+    <div class="content" id="content"></div>
+  </div>
+</div>
 
 <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbx2iKtnaAMXHyyWy-CwDLmTBFHsv7mstq6BBCQvjX7GFq1Xi4H0uMN7NFg-UKA3-X_rLA/exec";
+const scriptURL = "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE";
 
-const people = ["Jon", "Katie", "Dave", "Jason", "Karen", "Chelsea", "Jen", "Stef", "Dan", "Geoff", "Eddie", "Gwen", "Evie", "Claire", "Main", "Theo", "Elora", "Eden", "Nora"];
+const adults = ["Jon", "Katie", "Dave", "Jason", "Karen", "Chelsea", "Jen", "Stef", "Dan", "Geoff"];
+const kids = ["Eddie", "Gwen", "Evie", "Claire", "Main", "Theo", "Elora", "Eden", "Nora"];
 let data = {};
 
 async function loadData() {
@@ -104,16 +243,28 @@ async function loadData() {
 }
 
 function renderTabs() {
-  const tabContainer = document.getElementById("tabs");
-  tabContainer.innerHTML = "";
-  people.forEach(p => {
+  const adultContainer = document.getElementById("adultTabs");
+  const kidContainer = document.getElementById("kidTabs");
+  adultContainer.innerHTML = "";
+  kidContainer.innerHTML = "";
+
+  adults.forEach(p => {
     const tab = document.createElement("div");
     tab.className = "tab";
     tab.textContent = p;
     tab.onclick = () => selectPerson(p);
-    tabContainer.appendChild(tab);
+    adultContainer.appendChild(tab);
   });
-  selectPerson(people[0]);
+
+  kids.forEach(p => {
+    const tab = document.createElement("div");
+    tab.className = "tab";
+    tab.textContent = p;
+    tab.onclick = () => selectPerson(p);
+    kidContainer.appendChild(tab);
+  });
+
+  selectPerson(adults[0]);
 }
 
 function selectPerson(person) {
@@ -124,32 +275,33 @@ function selectPerson(person) {
   const pData = data[person] || { gifts: [], stocking: "" };
 
   c.innerHTML = `
+    <h2 style="color:#146c43;">${person}'s Gift List</h2>
     <div class="gift-inputs">
       <input id="giftName" placeholder="Gift name" />
       <input id="priority" placeholder="Priority" style="width:80px"/>
       <input id="price" type="number" placeholder="Price" style="width:80px"/>
-      <input id="url" placeholder="URL" />
-      <textarea id="notes" placeholder="Notes" rows="1"></textarea>
+      <input id="url" placeholder="Product URL" />
+      <textarea id="notes" placeholder="Notes about the gift" rows="2"></textarea>
       <button onclick="addGift('${person}')">Add Gift</button>
     </div>
 
-    <h3>Gifts for ${person}</h3>
-    <table>
-      <tr><th>Name</th><th>Priority</th><th>Price</th><th>Notes</th><th>Link</th><th></th></tr>
+    <table class="gift-table">
+      <tr><th>Gift</th><th>Priority</th><th>Price</th><th>Notes</th><th>Link</th><th></th></tr>
       ${pData.gifts.map(g => `
         <tr>
           <td>${g.name}</td>
           <td>${g.priority}</td>
           <td>${g.price}</td>
           <td>${g.notes}</td>
-          <td>${g.url ? `<a href="${g.url}" target="_blank">Link</a>` : ""}</td>
+          <td>${g.url ? `<a href="${g.url.startsWith('http') ? g.url : 'https://' + g.url}" target="_blank">View</a>` : ""}</td>
           <td><button onclick="removeGift('${person}', '${g.name}')">❌</button></td>
         </tr>
       `).join("")}
     </table>
 
-    <h3 style="margin-top:25px;">Stocking Idea</h3>
-    <textarea id="stockingIdea" rows="3" style="width:100%;">${pData.stocking || ""}</textarea><br>
+    <div class="section-divider"></div>
+    <h3>🎅 Stocking Idea</h3>
+    <textarea id="stockingIdea" class="stocking-box" rows="3" placeholder="Add stocking ideas here...">${pData.stocking || ""}</textarea><br>
     <button onclick="saveStocking('${person}')">Save Stocking Idea</button>
   `;
 }
