@@ -6,14 +6,14 @@
   <title>Christmas Gift Exchange</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
       display: flex;
       background-color: #f5f7f5;
       color: #333;
     }
     .left-column {
-      width: 260px;
+      width: 280px;
       background-color: #e8f5e9;
       padding: 20px;
       border-right: 2px solid #a5d6a7;
@@ -21,16 +21,37 @@
     .group-title {
       font-weight: bold;
       color: #2e7d32;
+      font-size: 1.1em;
       margin-top: 20px;
       margin-bottom: 8px;
+      text-align: center;
+      border-bottom: 1px solid #a5d6a7;
+      padding-bottom: 4px;
     }
     .pair-table {
       width: 100%;
       border-collapse: collapse;
+      margin-bottom: 10px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .pair-table th {
+      background-color: #c8e6c9;
+      color: #2e7d32;
+      font-weight: 600;
+      text-align: left;
+      padding: 6px 8px;
+      font-size: 0.9em;
     }
     .pair-table td {
-      padding: 5px 8px;
-      border-bottom: 1px solid #c8e6c9;
+      padding: 6px 10px;
+      border-bottom: 1px solid #e0f2f1;
+      font-size: 0.9em;
+    }
+    .pair-table tr:last-child td {
+      border-bottom: none;
     }
     .content {
       flex: 1;
@@ -48,10 +69,12 @@
       background-color: #c8e6c9;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 0.95em;
     }
     .tab.active {
       background-color: #81c784;
       color: white;
+      font-weight: 600;
     }
     .tab-content {
       display: none;
@@ -75,10 +98,13 @@
     }
     th {
       background-color: #e8f5e9;
+      color: #2e7d32;
     }
     input, textarea {
       padding: 6px;
       box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
     input {
       height: 30px;
@@ -121,68 +147,53 @@
   <div class="left-column">
     <div class="group-title">Adults</div>
     <table class="pair-table">
-      <tr><td>Jon → Katie</td></tr>
-      <tr><td>Dave → Jason</td></tr>
-      <tr><td>Karen → Chelsea</td></tr>
-      <tr><td>Jen → Stef</td></tr>
-      <tr><td>Dan → Jon</td></tr>
-      <tr><td>Jason → Dave</td></tr>
-      <tr><td>Stef → Geoff</td></tr>
-      <tr><td>Katie → Dan</td></tr>
-      <tr><td>Chelsea → Jen</td></tr>
-      <tr><td>Geoff → Karen</td></tr>
+      <tr><th>Giver</th><th>→ Receiver</th></tr>
+      <tr><td>Jon</td><td>Katie</td></tr>
+      <tr><td>Dave</td><td>Jason</td></tr>
+      <tr><td>Karen</td><td>Chelsea</td></tr>
+      <tr><td>Jen</td><td>Stef</td></tr>
+      <tr><td>Dan</td><td>Jon</td></tr>
+      <tr><td>Jason</td><td>Dave</td></tr>
+      <tr><td>Stef</td><td>Geoff</td></tr>
+      <tr><td>Katie</td><td>Dan</td></tr>
+      <tr><td>Chelsea</td><td>Jen</td></tr>
+      <tr><td>Geoff</td><td>Karen</td></tr>
     </table>
 
     <div class="group-title">Kids</div>
     <table class="pair-table">
-      <tr><td>Eddie → Gwen</td></tr>
-      <tr><td>Gwen → Evie</td></tr>
-      <tr><td>Evie → Claire</td></tr>
-      <tr><td>Claire → Eddie</td></tr>
-      <tr><td>Main → Theo</td></tr>
-      <tr><td>Theo → Elora</td></tr>
-      <tr><td>Elora → Main</td></tr>
-      <tr><td>Eden → Nora</td></tr>
-      <tr><td>Nora → Eden</td></tr>
+      <tr><th>Giver</th><th>→ Receiver</th></tr>
+      <tr><td>Eddie</td><td>Gwen</td></tr>
+      <tr><td>Gwen</td><td>Evie</td></tr>
+      <tr><td>Evie</td><td>Claire</td></tr>
+      <tr><td>Claire</td><td>Eddie</td></tr>
+      <tr><td>Main</td><td>Theo</td></tr>
+      <tr><td>Theo</td><td>Elora</td></tr>
+      <tr><td>Elora</td><td>Main</td></tr>
+      <tr><td>Eden</td><td>Nora</td></tr>
+      <tr><td>Nora</td><td>Eden</td></tr>
     </table>
   </div>
 
   <div class="content">
-    <div class="tabs">
-      <div class="tab" data-person="Jon">Jon</div>
-      <div class="tab" data-person="Dave">Dave</div>
-      <div class="tab" data-person="Karen">Karen</div>
-      <div class="tab" data-person="Jen">Jen</div>
-      <div class="tab" data-person="Dan">Dan</div>
-      <div class="tab" data-person="Jason">Jason</div>
-      <div class="tab" data-person="Stef">Stef</div>
-      <div class="tab" data-person="Katie">Katie</div>
-      <div class="tab" data-person="Chelsea">Chelsea</div>
-      <div class="tab" data-person="Geoff">Geoff</div>
-    </div>
-    <div class="tabs">
-      <div class="tab" data-person="Eddie">Eddie</div>
-      <div class="tab" data-person="Gwen">Gwen</div>
-      <div class="tab" data-person="Evie">Evie</div>
-      <div class="tab" data-person="Claire">Claire</div>
-      <div class="tab" data-person="Main">Main</div>
-      <div class="tab" data-person="Theo">Theo</div>
-      <div class="tab" data-person="Elora">Elora</div>
-      <div class="tab" data-person="Eden">Eden</div>
-      <div class="tab" data-person="Nora">Nora</div>
-    </div>
-
+    <div class="tabs" id="adultTabs"></div>
+    <div class="tabs" id="kidTabs"></div>
     <div id="tab-contents"></div>
   </div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
-    const people = [
-      "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
-      "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
-    ];
 
+    const adults = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff"];
+    const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+    const people = [...adults, ...kids];
+
+    const adultTabs = document.getElementById("adultTabs");
+    const kidTabs = document.getElementById("kidTabs");
     const tabContents = document.getElementById("tab-contents");
+
+    adults.forEach(p => adultTabs.innerHTML += `<div class="tab" data-person="${p}">${p}</div>`);
+    kids.forEach(p => kidTabs.innerHTML += `<div class="tab" data-person="${p}">${p}</div>`);
 
     people.forEach(person => {
       const div = document.createElement("div");
@@ -227,13 +238,14 @@
       const notes = document.getElementById(`giftNotes-${person}`).value.trim();
       if (!name) return alert("Please enter a gift name.");
 
-      const gift = { person, name, priority, price, url, notes };
+      const gift = { name, priority, price, url, notes };
+      renderGift(person, gift);
+
       await fetch(scriptURL, {
         method: "POST",
-        body: JSON.stringify({ action: "addGift", ...gift }),
+        body: JSON.stringify({ action: "addGift", person, gift }),
       });
 
-      renderGift(person, gift);
       document.getElementById(`giftName-${person}`).value = "";
       document.getElementById(`giftPriority-${person}`).value = "";
       document.getElementById(`giftPrice-${person}`).value = "";
@@ -244,11 +256,7 @@
     function renderGift(person, gift) {
       const table = document.getElementById(`giftTable-${person}`);
       const row = document.createElement("tr");
-      let linkHTML = "";
-      if (gift.url) {
-        const fullURL = gift.url.startsWith("http") ? gift.url : `https://${gift.url}`;
-        linkHTML = `<a href="${fullURL}" target="_blank">View</a>`;
-      }
+      const linkHTML = gift.url ? `<a href="${gift.url.startsWith('http') ? gift.url : 'https://' + gift.url}" target="_blank">View</a>` : "";
       row.innerHTML = `
         <td>${gift.name}</td>
         <td>${gift.priority}</td>
@@ -269,32 +277,13 @@
     }
 
     async function saveStocking(person) {
-      const text = document.getElementById(`stocking-${person}`).value;
+      const stocking = document.getElementById(`stocking-${person}`).value.trim();
       await fetch(scriptURL, {
         method: "POST",
-        body: JSON.stringify({ action: "saveStocking", person, text }),
+        body: JSON.stringify({ action: "saveStocking", person, stocking }),
       });
       alert("Stocking ideas saved!");
     }
-
-    async function loadData() {
-      const res = await fetch(scriptURL + "?action=getData");
-      const data = await res.json();
-      if (data.gifts) {
-        data.gifts.forEach(g => renderGift(g.person, g));
-      }
-      if (data.stockings) {
-        Object.keys(data.stockings).forEach(p => {
-          if (document.getElementById(`stocking-${p}`))
-            document.getElementById(`stocking-${p}`).value = data.stockings[p];
-        });
-      }
-    }
-
-    loadData();
   </script>
 </body>
 </html>
-
-
-
