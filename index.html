@@ -1,340 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>West Family Gift Exchange 🎄</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin:0; background:#f5f7f5; color:#222; }
-    header { background:#2e8b57; color:white; padding:14px; text-align:center; font-size:1.2rem; }
-    .layout { display:flex; gap:24px; padding:20px; align-items:flex-start; }
-    .left {
-      width:300px;
-      background:#e8f5e9;
-      padding:16px;
-      border-radius:10px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.08);
-      text-align:left;
-    }
-    .tree { text-align:center; font-size:44px; margin-bottom:6px; }
-    .left h3 { margin:4px 0 10px 0; color:#2e8b57; }
-    .pair-table { width:100%; border-collapse:collapse; background:#fff; border-radius:6px; overflow:hidden; }
-    .pair-table th { background:#c8e6c9; color:#2e7d32; padding:8px; text-align:left; }
-    .pair-table td { padding:8px; border-top:1px solid #e8f5e9; }
-    .main {
-      flex:1;
-      background:white;
-      padding:18px;
-      border-radius:10px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.06);
-    }
-    .tabs { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
-    .tab { padding:8px 12px; background:#c8e6c9; border-radius:8px; cursor:pointer; }
-    .tab.active { background:#2e8b57; color:white; font-weight:600; }
-    .tab-row { margin-bottom:6px; display:flex; gap:6px; flex-wrap:wrap; }
-    .content-area { margin-top:6px; }
-    .gift-table { width:100%; border-collapse:collapse; margin-bottom:12px; }
-    .gift-table th, .gift-table td { border:1px solid #e7efe7; padding:8px; text-align:left; }
-    .gift-table th { background:#f0f9f0; color:#2e7d32; }
-    .add-row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
-    .add-row input[type="text"], .add-row input[type="url"], .add-row textarea {
-      padding:6px; border-radius:6px; border:1px solid #ccc; font-size:14px;
-    }
-    .add-row input.short { width:90px; }
-    .notes { width:280px; height:48px; }
-    button { background:#2e8b57; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
-    button:hover { background:#276a46; }
-    .small-btn { padding:6px 8px; font-size:13px; border-radius:6px; }
-    .status { font-size:13px; color:#666; margin-top:6px; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>West Family Gift Exchange 🎁</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #f9fafb;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    color: #146c43;
+    margin-top: 20px;
+  }
+  .tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  .tab {
+    background: #d1e7dd;
+    border: 2px solid #146c43;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .tab.active {
+    background: #146c43;
+    color: white;
+  }
+  .content {
+    margin: 30px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-width: 700px;
+    padding: 20px;
+    text-align: left;
+  }
+  .gift-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  input, textarea {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px;
+    flex: 1;
+  }
+  input[type="number"] {
+    width: 80px;
+  }
+  button {
+    background: #146c43;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  button:hover {
+    background: #0f5132;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  th, td {
+    padding: 8px;
+    border-bottom: 1px solid #e9ecef;
+  }
+  a {
+    color: #0d6efd;
+  }
+</style>
 </head>
 <body>
-  <header>West Family Gift Exchange</header>
+<h1>🎄 West Family Gift Exchange 🎁</h1>
 
-  <div class="layout">
-    <aside class="left">
-      <div class="tree">🎄</div>
+<div class="tabs" id="tabs"></div>
+<div id="content"></div>
 
-      <h3>Adults</h3>
-      <table class="pair-table" id="adult-pairings">
-        <thead><tr><th>Giver</th><th>Receiver</th></tr></thead>
-        <tbody></tbody>
-      </table>
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbx2iKtnaAMXHyyWy-CwDLmTBFHsv7mstq6BBCQvjX7GFq1Xi4H0uMN7NFg-UKA3-X_rLA/exec";
 
-      <h3 style="margin-top:14px">Kids</h3>
-      <table class="pair-table" id="kid-pairings">
-        <thead><tr><th>Giver</th><th>Receiver</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </aside>
+const people = ["Jon", "Katie", "Dave", "Jason", "Karen", "Chelsea", "Jen", "Stef", "Dan", "Geoff", "Eddie", "Gwen", "Evie", "Claire", "Main", "Theo", "Elora", "Eden", "Nora"];
+let data = {};
 
-    <main class="main">
-      <!-- two tab rows: adults then kids -->
-      <div class="tab-row" id="adult-tabs-row"></div>
-      <div class="tab-row" id="kid-tabs-row"></div>
+async function loadData() {
+  const res = await fetch(`${scriptURL}?t=${Date.now()}`);
+  data = await res.json();
+  renderTabs();
+}
 
-      <div class="content-area" id="content-area">
-        <!-- content (gift table + add form) is injected here -->
-      </div>
+function renderTabs() {
+  const tabContainer = document.getElementById("tabs");
+  tabContainer.innerHTML = "";
+  people.forEach(p => {
+    const tab = document.createElement("div");
+    tab.className = "tab";
+    tab.textContent = p;
+    tab.onclick = () => selectPerson(p);
+    tabContainer.appendChild(tab);
+  });
+  selectPerson(people[0]);
+}
 
-      <div class="status" id="status"></div>
-    </main>
-  </div>
+function selectPerson(person) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  [...document.querySelectorAll(".tab")].find(t => t.textContent === person).classList.add("active");
 
-  <script>
-    // ====== CONFIG: update if needed ======
-    const scriptURL = "https://script.google.com/macros/s/AKfycbx0abMsOVN80bE7iQPxV_lRDK1hDci57JAdgi4jHY0rKYudT4k5BPxf8W5olbhwlem9qA/exec";
+  const c = document.getElementById("content");
+  const pData = data[person] || { gifts: [], stocking: "" };
 
-    // exact pairings you requested
-    const adultsPairs = [
-      ["Jon","Katie"],["Dave","Jason"],["Karen","Chelsea"],["Jen","Stef"],["Dan","Jon"],
-      ["Jason","Dave"],["Stef","Geoff"],["Katie","Dan"],["Chelsea","Jen"],["Geoff","Karen"]
-    ];
-    const kidsPairs = [
-      ["Eddie","Gwen"],["Gwen","Evie"],["Evie","Claire"],["Claire","Eddie"],
-      ["Main","Theo"],["Theo","Elora"],["Elora","Main"],["Eden","Nora"],["Nora","Eden"]
-    ];
+  c.innerHTML = `
+    <div class="gift-inputs">
+      <input id="giftName" placeholder="Gift name" />
+      <input id="priority" placeholder="Priority" style="width:80px"/>
+      <input id="price" type="number" placeholder="Price" style="width:80px"/>
+      <input id="url" placeholder="URL" />
+      <textarea id="notes" placeholder="Notes" rows="1"></textarea>
+      <button onclick="addGift('${person}')">Add Gift</button>
+    </div>
 
-    const adults = adultsPairs.map(p=>p[0]);
-    const kids = kidsPairs.map(p=>p[0]);
-    const people = [...adults, ...kids];
+    <h3>Gifts for ${person}</h3>
+    <table>
+      <tr><th>Name</th><th>Priority</th><th>Price</th><th>Notes</th><th>Link</th><th></th></tr>
+      ${pData.gifts.map(g => `
+        <tr>
+          <td>${g.name}</td>
+          <td>${g.priority}</td>
+          <td>${g.price}</td>
+          <td>${g.notes}</td>
+          <td>${g.url ? `<a href="${g.url}" target="_blank">Link</a>` : ""}</td>
+          <td><button onclick="removeGift('${person}', '${g.name}')">❌</button></td>
+        </tr>
+      `).join("")}
+    </table>
 
-    // in-memory model loaded from sheet
-    let data = {}; // { Person: { gifts: [ {name,priority,price,url,notes} ], stocking: "..." } }
-    let current = people[0];
+    <h3 style="margin-top:25px;">Stocking Idea</h3>
+    <textarea id="stockingIdea" rows="3" style="width:100%;">${pData.stocking || ""}</textarea><br>
+    <button onclick="saveStocking('${person}')">Save Stocking Idea</button>
+  `;
+}
 
-    // helper: status message
-    function setStatus(msg, ms=3000) {
-      const el = document.getElementById('status');
-      el.textContent = msg;
-      if (ms>0) setTimeout(()=>{ if (el.textContent===msg) el.textContent=''; }, ms);
-    }
+async function addGift(person) {
+  const gift = {
+    name: document.getElementById("giftName").value.trim(),
+    priority: document.getElementById("priority").value.trim(),
+    price: document.getElementById("price").value.trim(),
+    url: document.getElementById("url").value.trim(),
+    notes: document.getElementById("notes").value.trim()
+  };
+  if (!gift.name) return alert("Please enter a gift name");
 
-    // build pairings tables
-    function renderPairings() {
-      const adultBody = document.querySelector('#adult-pairings tbody');
-      adultBody.innerHTML = '';
-      adultsPairs.forEach(([g,r]) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${escapeHtml(g)}</td><td>${escapeHtml(r)}</td>`;
-        adultBody.appendChild(tr);
-      });
+  await fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify({ action: "addGift", person, gift })
+  });
+  loadData();
+}
 
-      const kidBody = document.querySelector('#kid-pairings tbody');
-      kidBody.innerHTML = '';
-      kidsPairs.forEach(([g,r]) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${escapeHtml(g)}</td><td>${escapeHtml(r)}</td>`;
-        kidBody.appendChild(tr);
-      });
-    }
+async function removeGift(person, name) {
+  await fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify({ action: "removeGift", person, name })
+  });
+  loadData();
+}
 
-    // build tab rows (adults first row, kids second row)
-    function renderTabs() {
-      const aRow = document.getElementById('adult-tabs-row');
-      const kRow = document.getElementById('kid-tabs-row');
-      aRow.innerHTML = '';
-      kRow.innerHTML = '';
-      adults.forEach(name => {
-        const d = document.createElement('div');
-        d.className = 'tab' + (name === current ? ' active' : '');
-        d.textContent = name;
-        d.dataset.person = name;
-        d.onclick = () => { current = name; renderTabs(); renderContent(); };
-        aRow.appendChild(d);
-      });
-      kids.forEach(name => {
-        const d = document.createElement('div');
-        d.className = 'tab' + (name === current ? ' active' : '');
-        d.textContent = name;
-        d.dataset.person = name;
-        d.onclick = () => { current = name; renderTabs(); renderContent(); };
-        kRow.appendChild(d);
-      });
-    }
-
-    // render content for current person: gifts table + add form
-    function renderContent() {
-      const container = document.getElementById('content-area');
-      const pData = data[current] || { gifts: [], stocking: '' };
-      const rowsHtml = (pData.gifts || []).map((g, idx) => {
-        const link = g.url ? `<a href="${formatURL(g.url)}" target="_blank">Link</a>` : '';
-        // include data-index for stable reference (we'll search by name on server)
-        return `<tr data-index="${idx}">
-          <td>${escapeHtml(g.name)}</td>
-          <td>${escapeHtml(g.priority)}</td>
-          <td>${escapeHtml(g.price)}</td>
-          <td>${link}</td>
-          <td>${escapeHtml(g.notes||'')}</td>
-          <td><button class="remove-btn small-btn" data-name="${escapeAttr(g.name)}">Remove</button></td>
-        </tr>`;
-      }).join('');
-
-      container.innerHTML = `
-        <h3 style="color:#2e7d32">${escapeHtml(current)}'s Gifts</h3>
-        <table class="gift-table">
-          <thead><tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th></th></tr></thead>
-          <tbody id="gifts-body">${rowsHtml}</tbody>
-        </table>
-
-        <div class="add-row">
-          <input id="in-name" type="text" placeholder="Gift name" />
-          <input id="in-pri" class="short" type="text" placeholder="Priority" />
-          <input id="in-price" class="short" type="text" placeholder="Price" />
-          <input id="in-url" type="url" placeholder="Product URL (optional)" />
-          <textarea id="in-notes" class="notes" placeholder="Notes (optional)"></textarea>
-          <button id="btn-add">Add Gift</button>
-        </div>
-
-        <div style="margin-top:12px">
-          <h4 style="display:inline-block; margin:0 8px 6px 0">Stocking ideas</h4>
-          <button id="btn-save-stocking" class="small-btn">Save</button>
-        </div>
-        <textarea id="in-stocking" class="notes" placeholder="Stocking ideas...">${escapeHtml(pData.stocking||'')}</textarea>
-      `;
-
-      // wire up local add and remove handlers after DOM inserted
-      document.getElementById('btn-add').addEventListener('click', () => addGift(current));
-      document.getElementById('btn-save-stocking').addEventListener('click', () => saveStocking(current));
-      document.getElementById('gifts-body').addEventListener('click', handleRemoveClick);
-    }
-
-    // handle remove button clicks (delegated)
-    async function handleRemoveClick(e) {
-      const btn = e.target.closest('.remove-btn');
-      if (!btn) return;
-      const giftName = btn.dataset.name;
-      const person = current;
-      setStatus('Removing...');
-      try {
-        const res = await fetch(scriptURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'removeGift', person, name: giftName })
-        });
-        const text = await res.text();
-        if (text && text.toLowerCase().includes('removed')) {
-          // remove from local model and DOM
-          if (data[person] && Array.isArray(data[person].gifts)) {
-            data[person].gifts = data[person].gifts.filter(g => (g.name||'').trim().toLowerCase() !== (giftName||'').trim().toLowerCase());
-          }
-          // remove the row
-          const row = btn.closest('tr');
-          if (row) row.remove();
-          setStatus('Removed ✓', 2000);
-        } else {
-          setStatus('Not found in sheet', 4000);
-          alert('Could not remove gift on server: ' + text);
-        }
-      } catch (err) {
-        console.error(err);
-        setStatus('Remove failed', 4000);
-        alert('Remove failed — check console for details.');
-      }
-    }
-
-    // add a gift -> POST to sheet, update local model & UI after success
-    async function addGift(person) {
-      const name = document.getElementById('in-name').value.trim();
-      if (!name) { alert('Enter gift name'); return; }
-      const gift = {
-        name,
-        priority: document.getElementById('in-pri').value.trim(),
-        price: document.getElementById('in-price').value.trim(),
-        url: document.getElementById('in-url').value.trim(),
-        notes: document.getElementById('in-notes').value.trim()
-      };
-      setStatus('Saving...');
-      try {
-        const res = await fetch(scriptURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'addGift', person, gift })
-        });
-        const text = await res.text();
-        if (text && text.toLowerCase().includes('added')) {
-          if (!data[person]) data[person] = { gifts: [], stocking: '' };
-          data[person].gifts.push(gift);
-          renderContent();
-          setStatus('Saved ✓', 2000);
-          // clear inputs
-          document.getElementById('in-name').value = '';
-          document.getElementById('in-pri').value = '';
-          document.getElementById('in-price').value = '';
-          document.getElementById('in-url').value = '';
-          document.getElementById('in-notes').value = '';
-        } else {
-          setStatus('Save failed', 4000);
-          alert('Failed to add gift: ' + text);
-        }
-      } catch (err) {
-        console.error(err);
-        setStatus('Save failed', 4000);
-        alert('Failed to add gift — check console.');
-      }
-    }
-
-    // save stocking ideas
-    async function saveStocking(person) {
-      const text = document.getElementById('in-stocking').value.trim();
-      setStatus('Saving stocking...');
-      try {
-        const res = await fetch(scriptURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'saveStocking', person, stocking: text })
-        });
-        const resp = await res.text();
-        if (resp && resp.toLowerCase().includes('saved')) {
-          if (!data[person]) data[person] = { gifts: [], stocking: '' };
-          data[person].stocking = text;
-          setStatus('Stocking saved ✓', 2000);
-        } else {
-          setStatus('Stocking save failed', 4000);
-          alert('Save failed: ' + resp);
-        }
-      } catch (err) {
-        console.error(err);
-        setStatus('Stocking save failed', 4000);
-        alert('Failed to save stocking ideas — check console.');
-      }
-    }
-
-    // load data from server and initialize UI
-    async function initialize() {
-      renderPairings();
-      try {
-        const res = await fetch(`${scriptURL}?action=getData`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Network response not ok');
-        const json = await res.json();
-        data = json || {};
-      } catch (err) {
-        console.error('load error', err);
-        // if sheet is unreachable, ensure structure for all people so tabs still render
-        people.forEach(p => { if (!data[p]) data[p] = { gifts: [], stocking: '' }; });
-      }
-      // ensure all people exist in model
-      people.forEach(p => { if (!data[p]) data[p] = { gifts: [], stocking: '' }; });
-      renderTabs();
-      renderContent();
-    }
-
-    // small utilities
-    function formatURL(u) {
-      if (!u) return '';
-      return (u.startsWith('http://') || u.startsWith('https://')) ? u : 'https://' + u;
-    }
-    function escapeHtml(s) {
-      if (!s) return '';
-      return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-    }
-    function escapeAttr(s) {
-      if (!s) return '';
-      return String(s).replaceAll('"','&quot;').replaceAll("'",'&#39;');
-    }
-
-    // initial run
-    initialize();
-  </script>
+async function saveStocking(person) {
+  const stocking = document.getElementById("stockingIdea").value.trim();
+  await fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify({ action: "saveStocking", person, stocking })
+  });
+  alert("Stocking idea saved!");
+}
+loadData();
+</script>
 </body>
 </html>
