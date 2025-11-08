@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Christmas Gift Exchange</title>
+  <title>Christmas Gift Exchange 🎄</title>
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
@@ -17,6 +17,11 @@
       background-color: #e8f5e9;
       padding: 20px;
       border-right: 2px solid #a5d6a7;
+      text-align: center;
+    }
+    .tree {
+      font-size: 48px;
+      margin-bottom: 10px;
     }
     .group-title {
       font-weight: bold;
@@ -111,7 +116,7 @@
     }
     textarea {
       width: 100%;
-      height: 60px;
+      height: 70px;
       resize: vertical;
       margin-top: 5px;
     }
@@ -145,6 +150,7 @@
 </head>
 <body>
   <div class="left-column">
+    <div class="tree">🎄</div>
     <div class="group-title">Adults</div>
     <table class="pair-table">
       <tr><th>Giver</th><th>→ Receiver</th></tr>
@@ -183,7 +189,6 @@
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
-
     const adults = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff"];
     const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
     const people = [...adults, ...kids];
@@ -229,6 +234,25 @@
         document.getElementById(`content-${tab.dataset.person}`).classList.add("active");
       });
     });
+
+    // Load gifts + stocking ideas from Google Sheet
+    async function loadData() {
+      try {
+        const res = await fetch(scriptURL + "?action=getData");
+        const data = await res.json();
+        for (const person in data) {
+          const info = data[person];
+          if (info.gifts) {
+            info.gifts.forEach(gift => renderGift(person, gift));
+          }
+          if (info.stocking) {
+            document.getElementById(`stocking-${person}`).value = info.stocking;
+          }
+        }
+      } catch (e) {
+        console.error("Error loading data:", e);
+      }
+    }
 
     async function addGift(person) {
       const name = document.getElementById(`giftName-${person}`).value.trim();
@@ -284,6 +308,8 @@
       });
       alert("Stocking ideas saved!");
     }
+
+    loadData();
   </script>
 </body>
 </html>
