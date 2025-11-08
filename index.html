@@ -3,65 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Christmas Gift Exchange 🎄</title>
+  <title>🎄 West Family Gift Exchange</title>
   <style>
     body {
-      font-family: "Segoe UI", Arial, sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       display: flex;
       background-color: #f5f7f5;
       color: #333;
     }
+
     .left-column {
-      width: 280px;
+      width: 260px;
       background-color: #e8f5e9;
       padding: 20px;
       border-right: 2px solid #a5d6a7;
       text-align: center;
     }
+
     .tree {
-      font-size: 48px;
+      font-size: 40px;
       margin-bottom: 10px;
     }
+
     .group-title {
       font-weight: bold;
       color: #2e7d32;
-      font-size: 1.1em;
       margin-top: 20px;
       margin-bottom: 8px;
-      text-align: center;
-      border-bottom: 1px solid #a5d6a7;
-      padding-bottom: 4px;
+      text-align: left;
     }
+
     .pair-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 10px;
-      background-color: #ffffff;
+      background-color: #f0fdf4;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-    .pair-table th {
-      background-color: #c8e6c9;
-      color: #2e7d32;
-      font-weight: 600;
-      text-align: left;
-      padding: 6px 8px;
-      font-size: 0.9em;
-    }
+
     .pair-table td {
-      padding: 6px 10px;
-      border-bottom: 1px solid #e0f2f1;
-      font-size: 0.9em;
+      padding: 6px 8px;
+      border-bottom: 1px solid #c8e6c9;
+      text-align: left;
     }
-    .pair-table tr:last-child td {
-      border-bottom: none;
-    }
+
     .content {
       flex: 1;
       padding: 20px;
     }
+
     .tabs {
       display: flex;
       flex-wrap: wrap;
@@ -69,18 +60,19 @@
       gap: 5px;
       justify-content: center;
     }
+
     .tab {
       padding: 8px 14px;
       background-color: #c8e6c9;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 0.95em;
     }
+
     .tab.active {
       background-color: #81c784;
       color: white;
-      font-weight: 600;
     }
+
     .tab-content {
       display: none;
       background-color: #fff;
@@ -88,50 +80,58 @@
       border-radius: 8px;
       box-shadow: 0 0 6px rgba(0,0,0,0.1);
     }
+
     .tab-content.active {
       display: block;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
     }
+
     th, td {
       border-bottom: 1px solid #ddd;
       padding: 6px;
       text-align: left;
     }
+
     th {
       background-color: #e8f5e9;
-      color: #2e7d32;
     }
+
     input, textarea {
       padding: 6px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
     }
+
     input {
       height: 30px;
     }
+
     textarea {
       width: 100%;
-      height: 70px;
+      height: 80px;
       resize: vertical;
       margin-top: 5px;
     }
+
     .gift-input-row {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
       margin-bottom: 6px;
     }
+
     .gift-input-row input {
       flex: 1;
     }
+
     .gift-input-row button {
       flex-shrink: 0;
     }
+
     button {
       padding: 6px 10px;
       background-color: #66bb6a;
@@ -140,9 +140,11 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #57a05b;
     }
+
     h3 {
       color: #2e7d32;
     }
@@ -151,179 +153,184 @@
 <body>
   <div class="left-column">
     <div class="tree">🎄</div>
+    <h2>Gift Pairings</h2>
+
     <div class="group-title">Adults</div>
     <table class="pair-table">
-      <tr><th>Giver</th><th>→ Receiver</th></tr>
-      <tr><td>Jon</td><td>Katie</td></tr>
-      <tr><td>Dave</td><td>Jason</td></tr>
-      <tr><td>Karen</td><td>Chelsea</td></tr>
-      <tr><td>Jen</td><td>Stef</td></tr>
-      <tr><td>Dan</td><td>Jon</td></tr>
-      <tr><td>Jason</td><td>Dave</td></tr>
-      <tr><td>Stef</td><td>Geoff</td></tr>
-      <tr><td>Katie</td><td>Dan</td></tr>
-      <tr><td>Chelsea</td><td>Jen</td></tr>
-      <tr><td>Geoff</td><td>Karen</td></tr>
+      <tr><td>Jon → Katie</td></tr>
+      <tr><td>Dave → Jason</td></tr>
+      <tr><td>Karen → Chelsea</td></tr>
+      <tr><td>Jen → Stef</td></tr>
+      <tr><td>Dan → Jon</td></tr>
+      <tr><td>Jason → Dave</td></tr>
+      <tr><td>Stef → Geoff</td></tr>
+      <tr><td>Katie → Dan</td></tr>
+      <tr><td>Chelsea → Jen</td></tr>
+      <tr><td>Geoff → Karen</td></tr>
     </table>
 
     <div class="group-title">Kids</div>
     <table class="pair-table">
-      <tr><th>Giver</th><th>→ Receiver</th></tr>
-      <tr><td>Eddie</td><td>Gwen</td></tr>
-      <tr><td>Gwen</td><td>Evie</td></tr>
-      <tr><td>Evie</td><td>Claire</td></tr>
-      <tr><td>Claire</td><td>Eddie</td></tr>
-      <tr><td>Main</td><td>Theo</td></tr>
-      <tr><td>Theo</td><td>Elora</td></tr>
-      <tr><td>Elora</td><td>Main</td></tr>
-      <tr><td>Eden</td><td>Nora</td></tr>
-      <tr><td>Nora</td><td>Eden</td></tr>
+      <tr><td>Eddie → Gwen</td></tr>
+      <tr><td>Gwen → Evie</td></tr>
+      <tr><td>Evie → Claire</td></tr>
+      <tr><td>Claire → Eddie</td></tr>
+      <tr><td>Main → Theo</td></tr>
+      <tr><td>Theo → Elora</td></tr>
+      <tr><td>Elora → Main</td></tr>
+      <tr><td>Eden → Nora</td></tr>
+      <tr><td>Nora → Eden</td></tr>
     </table>
   </div>
 
   <div class="content">
-    <div class="tabs" id="adultTabs"></div>
-    <div class="tabs" id="kidTabs"></div>
+    <div class="tabs">
+      <div class="tab" data-person="Jon">Jon</div>
+      <div class="tab" data-person="Dave">Dave</div>
+      <div class="tab" data-person="Karen">Karen</div>
+      <div class="tab" data-person="Jen">Jen</div>
+      <div class="tab" data-person="Dan">Dan</div>
+      <div class="tab" data-person="Jason">Jason</div>
+      <div class="tab" data-person="Stef">Stef</div>
+      <div class="tab" data-person="Katie">Katie</div>
+      <div class="tab" data-person="Chelsea">Chelsea</div>
+      <div class="tab" data-person="Geoff">Geoff</div>
+    </div>
+    <div class="tabs">
+      <div class="tab" data-person="Eddie">Eddie</div>
+      <div class="tab" data-person="Gwen">Gwen</div>
+      <div class="tab" data-person="Evie">Evie</div>
+      <div class="tab" data-person="Claire">Claire</div>
+      <div class="tab" data-person="Main">Main</div>
+      <div class="tab" data-person="Theo">Theo</div>
+      <div class="tab" data-person="Elora">Elora</div>
+      <div class="tab" data-person="Eden">Eden</div>
+      <div class="tab" data-person="Nora">Nora</div>
+    </div>
+
     <div id="tab-contents"></div>
   </div>
+
   <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
-  const people = [
-    "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
-    "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
-  ];
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
+    const people = [
+      "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
+      "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
+    ];
 
-  const tabContents = document.getElementById("tab-contents");
+    const tabContents = document.getElementById("tab-contents");
 
-  // Create tabs for each person
-  people.forEach(person => {
-    const div = document.createElement("div");
-    div.classList.add("tab-content");
-    div.id = `content-${person}`;
-    div.innerHTML = `
-      <h3>${person}'s Gift List</h3>
-      <div class="gift-input-row">
-        <input id="giftName-${person}" placeholder="Gift name" />
-        <input id="giftPriority-${person}" placeholder="Priority" style="width:80px;" />
-        <input id="giftPrice-${person}" placeholder="Price" style="width:80px;" />
-        <input id="giftURL-${person}" placeholder="Product URL (optional)" />
-        <input id="giftNotes-${person}" placeholder="Notes (optional)" />
-        <button onclick="addGift('${person}')">Add Gift</button>
-      </div>
+    // Build each person's tab content
+    people.forEach(person => {
+      const div = document.createElement("div");
+      div.classList.add("tab-content");
+      div.id = `content-${person}`;
+      div.innerHTML = `
+        <h3>${person}'s Gift List</h3>
+        <div class="gift-input-row">
+          <input id="giftName-${person}" placeholder="Gift name" />
+          <input id="giftPriority-${person}" placeholder="Priority" style="width:80px;" />
+          <input id="giftPrice-${person}" placeholder="Price" style="width:80px;" />
+          <input id="giftURL-${person}" placeholder="Product URL (optional)" />
+          <input id="giftNotes-${person}" placeholder="Notes (optional)" style="flex:2;" />
+          <button onclick="addGift('${person}')">Add Gift</button>
+        </div>
 
-      <table id="giftTable-${person}">
-        <tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th>Remove</th></tr>
-      </table>
+        <table id="giftTable-${person}">
+          <tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th>Remove</th></tr>
+        </table>
 
-      <h3>Stocking Ideas</h3>
-      <textarea id="stocking-${person}" placeholder="Add stocking ideas..."></textarea>
-      <button onclick="saveStocking('${person}')">Save Stocking Ideas</button>
-    `;
-    tabContents.appendChild(div);
-  });
-
-  // Handle tab switching
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-      tab.classList.add("active");
-      document.getElementById(`content-${tab.dataset.person}`).classList.add("active");
+        <h3>Stocking Ideas</h3>
+        <textarea id="stocking-${person}" placeholder="Add stocking ideas..."></textarea>
+        <button onclick="saveStocking('${person}')">Save Stocking Ideas</button>
+      `;
+      tabContents.appendChild(div);
     });
-  });
 
-  // --- Add gift ---
-  async function addGift(person) {
-    const name = document.getElementById(`giftName-${person}`).value.trim();
-    const priority = document.getElementById(`giftPriority-${person}`).value.trim();
-    const price = document.getElementById(`giftPrice-${person}`).value.trim();
-    const url = document.getElementById(`giftURL-${person}`).value.trim();
-    const notes = document.getElementById(`giftNotes-${person}`).value.trim();
-    if (!name) return alert("Please enter a gift name.");
+    // Tab switching
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(`content-${tab.dataset.person}`).classList.add("active");
+      });
+    });
 
-    const gift = { person, name, priority, price, url, notes };
-    
-    try {
+    async function addGift(person) {
+      const name = document.getElementById(`giftName-${person}`).value.trim();
+      const priority = document.getElementById(`giftPriority-${person}`).value.trim();
+      const price = document.getElementById(`giftPrice-${person}`).value.trim();
+      const url = document.getElementById(`giftURL-${person}`).value.trim();
+      const notes = document.getElementById(`giftNotes-${person}`).value.trim();
+      if (!name) return alert("Please enter a gift name.");
+
+      const gift = { person, name, priority, price, url, notes };
+
       await fetch(scriptURL, {
         method: "POST",
         body: JSON.stringify({ action: "addGift", gift, person }),
       });
+
       renderGift(person, gift);
+
       document.getElementById(`giftName-${person}`).value = "";
       document.getElementById(`giftPriority-${person}`).value = "";
       document.getElementById(`giftPrice-${person}`).value = "";
       document.getElementById(`giftURL-${person}`).value = "";
       document.getElementById(`giftNotes-${person}`).value = "";
-    } catch (err) {
-      console.error("Error adding gift:", err);
-      alert("Failed to add gift. Please try again.");
     }
-  }
 
-  // --- Render a gift row ---
-  function renderGift(person, gift) {
-    const table = document.getElementById(`giftTable-${person}`);
-    const row = document.createElement("tr");
-    let linkHTML = "";
-    if (gift.url) {
-      const fullURL = gift.url.startsWith("http") ? gift.url : `https://${gift.url}`;
-      linkHTML = `<a href="${fullURL}" target="_blank">View</a>`;
+    function renderGift(person, gift) {
+      const table = document.getElementById(`giftTable-${person}`);
+      const row = document.createElement("tr");
+      const fullURL = gift.url
+        ? (gift.url.startsWith("http") ? gift.url : `https://${gift.url}`)
+        : "";
+      const linkHTML = fullURL ? `<a href="${fullURL}" target="_blank">View</a>` : "";
+
+      row.innerHTML = `
+        <td>${gift.name}</td>
+        <td>${gift.priority}</td>
+        <td>${gift.price}</td>
+        <td>${linkHTML}</td>
+        <td>${gift.notes || ""}</td>
+        <td><button onclick="removeGift('${person}', '${gift.name}', this)">Remove</button></td>
+      `;
+      table.appendChild(row);
     }
-    row.innerHTML = `
-      <td>${gift.name}</td>
-      <td>${gift.priority}</td>
-      <td>${gift.price}</td>
-      <td>${linkHTML}</td>
-      <td>${gift.notes || ""}</td>
-      <td><button onclick="removeGift('${person}', '${gift.name}', this)">Remove</button></td>
-    `;
-    table.appendChild(row);
-  }
 
-  // --- Remove gift ---
-  async function removeGift(person, giftName, btn) {
-    try {
-      // Remove visually
+    async function removeGift(person, giftName, btn) {
       btn.closest("tr").remove();
-
-      // Remove from Google Sheet
-      const res = await fetch(scriptURL, {
+      await fetch(scriptURL, {
         method: "POST",
         body: JSON.stringify({ action: "removeGift", person, name: giftName }),
       });
-      const result = await res.text();
-      console.log("Removed:", result);
-    } catch (err) {
-      console.error("Error removing gift:", err);
-      alert("Failed to remove gift. Please try again.");
     }
-  }
 
-  // --- Save stocking ideas ---
-  async function saveStocking(person) {
-    const stocking = document.getElementById(`stocking-${person}`).value;
-    await fetch(scriptURL, {
-      method: "POST",
-      body: JSON.stringify({ action: "saveStocking", person, stocking }),
-    });
-    alert("Stocking ideas saved!");
-  }
+    async function saveStocking(person) {
+      const stocking = document.getElementById(`stocking-${person}`).value;
+      await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({ action: "saveStocking", person, stocking }),
+      });
+      alert("Stocking ideas saved!");
+    }
 
-  // --- Load all data on page load ---
-  async function loadData() {
-    const res = await fetch(`${scriptURL}?action=getData`);
-    const data = await res.json();
-    Object.keys(data).forEach(person => {
-      if (data[person].gifts) {
-        data[person].gifts.forEach(g => renderGift(person, g));
-      }
-      if (data[person].stocking && document.getElementById(`stocking-${person}`)) {
-        document.getElementById(`stocking-${person}`).value = data[person].stocking;
-      }
-    });
-  }
+    async function loadData() {
+      const res = await fetch(`${scriptURL}?action=getData`);
+      const data = await res.json();
+      Object.keys(data).forEach(person => {
+        if (data[person].gifts) {
+          data[person].gifts.forEach(g => renderGift(person, g));
+        }
+        if (data[person].stocking && document.getElementById(`stocking-${person}`)) {
+          document.getElementById(`stocking-${person}`).value = data[person].stocking;
+        }
+      });
+    }
 
-  loadData();
-</script>
+    loadData();
+  </script>
 </body>
 </html>
