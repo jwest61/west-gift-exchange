@@ -1,197 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>West Family Gift Exchange</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fafafa;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-    }
-
-    /* Left Pairings Panel */
-    .pairings {
-      width: 25%;
-      background-color: #e8f5e9;
-      padding: 20px;
-      border-right: 2px solid #c8e6c9;
-    }
-
-    .pairings h2 {
-      text-align: center;
-      color: #2e7d32;
-    }
-
-    .tree {
-      text-align: center;
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      border: 1px solid #a5d6a7;
-      padding: 8px;
-      text-align: center;
-    }
-
-    th {
-      background-color: #81c784;
-      color: white;
-    }
-
-    /* Main Content */
-    .main {
-      flex: 1;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #2e7d32;
-    }
-
-    .tab-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .tabs-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 5px 0;
-    }
-
-    .tab {
-      background-color: #c8e6c9;
-      border: none;
-      padding: 10px 15px;
-      margin: 3px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .tab.active {
-      background-color: #66bb6a;
-      color: white;
-    }
-
-    /* Gift Input Form */
-    .gift-input {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .gift-input input,
-    .gift-input textarea {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .gift-input input[type="text"],
-    .gift-input input[type="number"] {
-      width: 150px;
-    }
-
-    .gift-input textarea {
-      width: 250px;
-      height: 40px;
-    }
-
-    .gift-input button {
-      background-color: #66bb6a;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    /* Gifts Table */
-    .gift-table {
-      width: 90%;
-      margin: 0 auto;
-      border-collapse: collapse;
-    }
-
-    .gift-table th, .gift-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-
-    .gift-table th {
-      background-color: #a5d6a7;
-      color: #2e7d32;
-    }
-
-    .gift-table td a {
-      color: #1b5e20;
-      text-decoration: underline;
-    }
-
-    .remove-btn {
-      background-color: #ef5350;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-
-    .stocking-section {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .stocking-section textarea {
-      width: 60%;
-      height: 60px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      padding: 10px;
-    }
-
-    .stocking-section button {
-      margin-top: 10px;
-      background-color: #66bb6a;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>West Family Gift Exchange 🎄</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f5fff5; color: #333; margin: 0; padding: 20px; }
+  h1 { color: #2e8b57; text-align: center; }
+  .container { display: flex; justify-content: center; align-items: flex-start; gap: 30px; flex-wrap: wrap; }
+  table { border-collapse: collapse; background: #e8f5e9; border-radius: 8px; }
+  th, td { border: 1px solid #c8e6c9; padding: 8px 12px; }
+  th { background: #a5d6a7; color: #1b5e20; }
+  .tabs { text-align: center; margin: 30px 0; }
+  .tab-button { margin: 5px; padding: 10px 15px; border: none; background: #c8e6c9; border-radius: 8px; cursor: pointer; }
+  .tab-button.active { background: #81c784; color: white; }
+  .gift-table { width: 100%; margin-top: 10px; }
+  .gift-table td { border-bottom: 1px solid #ddd; padding: 6px; }
+  .gift-form input, .gift-form textarea { margin: 3px; padding: 5px; }
+  .gift-form { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .gift-form textarea { width: 200px; height: 50px; resize: none; }
+  .stocking { margin-top: 15px; display: flex; flex-direction: column; align-items: flex-start; }
+  .stocking textarea { width: 300px; height: 60px; border-radius: 5px; padding: 5px; }
+  button { background: #66bb6a; border: none; color: white; border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+  .tree { text-align: center; font-size: 50px; }
+</style>
 </head>
 <body>
+<h1>🎁 West Family Gift Exchange 🎄</h1>
 
-  <div class="pairings">
+<div class="container">
+  <div>
     <div class="tree">🎄</div>
-    <h2>Pairings</h2>
-
-    <h3>Adults</h3>
     <table>
-      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><th colspan="2">Adults</th></tr>
       <tr><td>Jon</td><td>Katie</td></tr>
       <tr><td>Dave</td><td>Jason</td></tr>
       <tr><td>Karen</td><td>Chelsea</td></tr>
@@ -202,11 +43,7 @@
       <tr><td>Katie</td><td>Dan</td></tr>
       <tr><td>Chelsea</td><td>Jen</td></tr>
       <tr><td>Geoff</td><td>Karen</td></tr>
-    </table>
-
-    <h3>Kids</h3>
-    <table>
-      <tr><th>Giver</th><th>Receiver</th></tr>
+      <tr><th colspan="2">Kids</th></tr>
       <tr><td>Eddie</td><td>Gwen</td></tr>
       <tr><td>Gwen</td><td>Evie</td></tr>
       <tr><td>Evie</td><td>Claire</td></tr>
@@ -219,124 +56,100 @@
     </table>
   </div>
 
-  <div class="main">
-    <h1>🎁 West Family Gift Exchange 🎁</h1>
+  <div style="flex: 1; min-width: 600px;">
+    <div class="tabs" id="tabs"></div>
+    <div id="giftSection"></div>
+  </div>
+</div>
 
-    <div class="tab-section">
-      <div class="tabs-row" id="adultTabs"></div>
-      <div class="tabs-row" id="kidTabs"></div>
-    </div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
+const adults = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff"];
+const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
+let allData = [];
+let activeName = adults[0];
 
-    <div class="gift-input">
-      <input id="giftName" type="text" placeholder="Gift Name" />
-      <input id="priority" type="text" placeholder="Priority" />
-      <input id="price" type="number" placeholder="Price ($)" />
-      <input id="url" type="text" placeholder="Product URL" />
-      <textarea id="notes" placeholder="Notes..."></textarea>
+async function loadData() {
+  const res = await fetch(SCRIPT_URL);
+  allData = await res.json();
+  renderTabs();
+  showGifts(activeName);
+}
+
+function renderTabs() {
+  const tabContainer = document.getElementById("tabs");
+  tabContainer.innerHTML = `
+    <div><strong>Adults:</strong><br>${adults.map(n => `<button class="tab-button ${n===activeName?'active':''}" onclick="setActive('${n}')">${n}</button>`).join("")}</div>
+    <div style="margin-top:15px;"><strong>Kids:</strong><br>${kids.map(n => `<button class="tab-button ${n===activeName?'active':''}" onclick="setActive('${n}')">${n}</button>`).join("")}</div>
+  `;
+}
+
+function setActive(name) {
+  activeName = name;
+  renderTabs();
+  showGifts(name);
+}
+
+function showGifts(name) {
+  const section = document.getElementById("giftSection");
+  const gifts = allData.filter(g => g.Name === name && g.GiftName);
+  const stocking = allData.find(g => g.Name === name && g.StockingIdea);
+
+  section.innerHTML = `
+    <h2>${name}'s Gifts</h2>
+    <div class="gift-form">
+      <input id="giftName" placeholder="Gift Name">
+      <input id="priority" placeholder="Priority" style="width:70px;">
+      <input id="price" placeholder="Price" style="width:70px;">
+      <input id="url" placeholder="Product URL" style="width:180px;">
+      <textarea id="notes" placeholder="Notes"></textarea>
       <button onclick="addGift()">Add Gift</button>
     </div>
-
-    <table class="gift-table" id="giftList">
-      <thead>
-        <tr><th>Gift</th><th>Priority</th><th>Price</th><th>URL</th><th>Notes</th><th>Action</th></tr>
-      </thead>
-      <tbody></tbody>
+    <table class="gift-table">
+      <tr><th>Gift</th><th>Priority</th><th>Price</th><th>URL</th><th>Notes</th><th></th></tr>
+      ${gifts.map(g => `
+        <tr>
+          <td>${g.GiftName}</td>
+          <td>${g.Priority}</td>
+          <td>${g.Price}</td>
+          <td>${g.URL ? `<a href="${g.URL.startsWith('http') ? g.URL : 'https://' + g.URL}" target="_blank">Link</a>` : ''}</td>
+          <td>${g.Notes}</td>
+          <td><button onclick="removeGift('${g.ID}')">❌</button></td>
+        </tr>`).join("")}
     </table>
 
-    <div class="stocking-section">
-      <h3>Stocking Idea</h3>
-      <textarea id="stockingIdea" placeholder="Add a stocking idea..."></textarea><br>
-      <button onclick="saveStockingIdea()">Save Stocking Idea</button>
+    <div class="stocking">
+      <label>🎅 Stocking Ideas:</label>
+      <textarea id="stocking">${stocking ? stocking.StockingIdea : ""}</textarea>
+      <button onclick="saveStocking()">Save Stocking Idea</button>
     </div>
-  </div>
+  `;
+}
 
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec';
+async function addGift() {
+  const data = {
+    action: "addGift",
+    name: activeName,
+    giftName: document.getElementById("giftName").value,
+    priority: document.getElementById("priority").value,
+    price: document.getElementById("price").value,
+    url: document.getElementById("url").value,
+    notes: document.getElementById("notes").value
+  };
+  await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(data) });
+  await loadData();
+}
 
-    const adults = ['Jon','Dave','Karen','Jen','Dan','Jason','Stef','Katie','Chelsea','Geoff'];
-    const kids = ['Eddie','Gwen','Evie','Claire','Main','Theo','Elora','Eden','Nora'];
-    let currentPerson = adults[0];
-    let gifts = {};
+async function removeGift(id) {
+  await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "removeGift", id }) });
+  await loadData();
+}
 
-    function renderTabs() {
-      const adultTabs = document.getElementById('adultTabs');
-      const kidTabs = document.getElementById('kidTabs');
-      adultTabs.innerHTML = adults.map(p => `<button class="tab ${p===currentPerson?'active':''}" onclick="switchPerson('${p}')">${p}</button>`).join('');
-      kidTabs.innerHTML = kids.map(p => `<button class="tab ${p===currentPerson?'active':''}" onclick="switchPerson('${p}')">${p}</button>`).join('');
-    }
-
-    function switchPerson(person) {
-      currentPerson = person;
-      renderTabs();
-      renderGifts();
-    }
-
-    function renderGifts() {
-      const tbody = document.querySelector('#giftList tbody');
-      tbody.innerHTML = '';
-      (gifts[currentPerson] || []).forEach((gift, index) => {
-        const row = document.createElement('tr');
-        const link = gift.url ? `<a href="${gift.url.startsWith('http') ? gift.url : 'https://' + gift.url}" target="_blank">Link</a>` : '';
-        row.innerHTML = `
-          <td>${gift.name}</td>
-          <td>${gift.priority}</td>
-          <td>${gift.price}</td>
-          <td>${link}</td>
-          <td>${gift.notes}</td>
-          <td><button class="remove-btn" onclick="removeGift(${index})">Remove</button></td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    async function addGift() {
-      const gift = {
-        name: document.getElementById('giftName').value,
-        priority: document.getElementById('priority').value,
-        price: document.getElementById('price').value,
-        url: document.getElementById('url').value,
-        notes: document.getElementById('notes').value
-      };
-      if (!gift.name) return alert('Please enter a gift name');
-      if (!gifts[currentPerson]) gifts[currentPerson] = [];
-      gifts[currentPerson].push(gift);
-      renderGifts();
-
-      await fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'addGift', person: currentPerson, gift })
-      });
-
-      document.getElementById('giftName').value = '';
-      document.getElementById('priority').value = '';
-      document.getElementById('price').value = '';
-      document.getElementById('url').value = '';
-      document.getElementById('notes').value = '';
-    }
-
-    async function removeGift(index) {
-      const removedGift = gifts[currentPerson][index];
-      gifts[currentPerson].splice(index, 1);
-      renderGifts();
-
-      await fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'removeGift', person: currentPerson, giftName: removedGift.name })
-      });
-    }
-
-    async function saveStockingIdea() {
-      const idea = document.getElementById('stockingIdea').value;
-      await fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'saveStockingIdea', person: currentPerson, idea })
-      });
-      alert('Stocking idea saved!');
-    }
-
-    renderTabs();
-    renderGifts();
-  </script>
-
+async function saveStocking() {
+  const stockingIdea = document.getElementById("stocking").value;
+  await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "saveStocking", name: activeName, stockingIdea }) });
+}
+loadData();
+</script>
 </body>
 </html>
