@@ -18,14 +18,14 @@
   }
   .container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 40px;
-    padding-bottom: 40px;
+    padding: 20px 40px 40px 40px;
   }
   /* Left Column: Pairings */
   .left-column {
-    min-width: 220px;
+    min-width: 240px;
   }
   .left-column h2 {
     color: #146c43;
@@ -52,7 +52,6 @@
   /* Right Column: Tabs & Content */
   .right-column {
     flex: 1;
-    max-width: 750px;
   }
   .tabs {
     display: flex;
@@ -168,7 +167,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const scriptURL = "https://script.google.com/macros/s/AKfycbwP_Tbu9_QuDMm6onR0fvri-byDwspixqDClvnTPU2NC1R7SE01pPlORnQoQWKczorsrg/exec"; // Replace with your Apps Script URL
+  const scriptURL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE"; // Replace with your Apps Script URL
 
   const adults = ["Jon","Katie","Dave","Jason","Karen","Chelsea","Jen","Stef","Dan","Geoff"];
   const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
