@@ -188,128 +188,144 @@
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
-    const adults = ["Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff"];
-    const kids = ["Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"];
-    const people = [...adults, ...kids];
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxp7B-f21quwbC-UcqnJTdb1xDzePMHd-GoWWGyMjBpt5ua8XMPswBh-jLSKywkz5gA1g/exec";
+  const people = [
+    "Jon","Dave","Karen","Jen","Dan","Jason","Stef","Katie","Chelsea","Geoff",
+    "Eddie","Gwen","Evie","Claire","Main","Theo","Elora","Eden","Nora"
+  ];
 
-    const adultTabs = document.getElementById("adultTabs");
-    const kidTabs = document.getElementById("kidTabs");
-    const tabContents = document.getElementById("tab-contents");
+  const tabContents = document.getElementById("tab-contents");
 
-    adults.forEach(p => adultTabs.innerHTML += `<div class="tab" data-person="${p}">${p}</div>`);
-    kids.forEach(p => kidTabs.innerHTML += `<div class="tab" data-person="${p}">${p}</div>`);
+  // Create tabs for each person
+  people.forEach(person => {
+    const div = document.createElement("div");
+    div.classList.add("tab-content");
+    div.id = `content-${person}`;
+    div.innerHTML = `
+      <h3>${person}'s Gift List</h3>
+      <div class="gift-input-row">
+        <input id="giftName-${person}" placeholder="Gift name" />
+        <input id="giftPriority-${person}" placeholder="Priority" style="width:80px;" />
+        <input id="giftPrice-${person}" placeholder="Price" style="width:80px;" />
+        <input id="giftURL-${person}" placeholder="Product URL (optional)" />
+        <input id="giftNotes-${person}" placeholder="Notes (optional)" />
+        <button onclick="addGift('${person}')">Add Gift</button>
+      </div>
 
-    people.forEach(person => {
-      const div = document.createElement("div");
-      div.classList.add("tab-content");
-      div.id = `content-${person}`;
-      div.innerHTML = `
-        <h3>${person}'s Gift List</h3>
-        <div class="gift-input-row">
-          <input id="giftName-${person}" placeholder="Gift name" />
-          <input id="giftPriority-${person}" placeholder="Priority" style="width:80px;" />
-          <input id="giftPrice-${person}" placeholder="Price" style="width:80px;" />
-          <input id="giftURL-${person}" placeholder="Product URL (optional)" />
-          <input id="giftNotes-${person}" placeholder="Notes (optional)" />
-          <button onclick="addGift('${person}')">Add Gift</button>
-        </div>
+      <table id="giftTable-${person}">
+        <tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th>Remove</th></tr>
+      </table>
 
-        <table id="giftTable-${person}">
-          <tr><th>Gift</th><th>Priority</th><th>Price</th><th>Link</th><th>Notes</th><th>Remove</th></tr>
-        </table>
+      <h3>Stocking Ideas</h3>
+      <textarea id="stocking-${person}" placeholder="Add stocking ideas..."></textarea>
+      <button onclick="saveStocking('${person}')">Save Stocking Ideas</button>
+    `;
+    tabContents.appendChild(div);
+  });
 
-        <h3>Stocking Ideas</h3>
-        <textarea id="stocking-${person}" placeholder="Add stocking ideas..."></textarea>
-        <button onclick="saveStocking('${person}')">Save Stocking Ideas</button>
-      `;
-      tabContents.appendChild(div);
+  // Handle tab switching
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById(`content-${tab.dataset.person}`).classList.add("active");
     });
+  });
 
-    document.querySelectorAll(".tab").forEach(tab => {
-      tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        tab.classList.add("active");
-        document.getElementById(`content-${tab.dataset.person}`).classList.add("active");
-      });
-    });
+  // --- Add gift ---
+  async function addGift(person) {
+    const name = document.getElementById(`giftName-${person}`).value.trim();
+    const priority = document.getElementById(`giftPriority-${person}`).value.trim();
+    const price = document.getElementById(`giftPrice-${person}`).value.trim();
+    const url = document.getElementById(`giftURL-${person}`).value.trim();
+    const notes = document.getElementById(`giftNotes-${person}`).value.trim();
+    if (!name) return alert("Please enter a gift name.");
 
-    // Load gifts + stocking ideas from Google Sheet
-    async function loadData() {
-      try {
-        const res = await fetch(scriptURL + "?action=getData");
-        const data = await res.json();
-        for (const person in data) {
-          const info = data[person];
-          if (info.gifts) {
-            info.gifts.forEach(gift => renderGift(person, gift));
-          }
-          if (info.stocking) {
-            document.getElementById(`stocking-${person}`).value = info.stocking;
-          }
-        }
-      } catch (e) {
-        console.error("Error loading data:", e);
-      }
-    }
-
-    async function addGift(person) {
-      const name = document.getElementById(`giftName-${person}`).value.trim();
-      const priority = document.getElementById(`giftPriority-${person}`).value.trim();
-      const price = document.getElementById(`giftPrice-${person}`).value.trim();
-      const url = document.getElementById(`giftURL-${person}`).value.trim();
-      const notes = document.getElementById(`giftNotes-${person}`).value.trim();
-      if (!name) return alert("Please enter a gift name.");
-
-      const gift = { name, priority, price, url, notes };
-      renderGift(person, gift);
-
+    const gift = { person, name, priority, price, url, notes };
+    
+    try {
       await fetch(scriptURL, {
         method: "POST",
-        body: JSON.stringify({ action: "addGift", person, gift }),
+        body: JSON.stringify({ action: "addGift", gift, person }),
       });
-
+      renderGift(person, gift);
       document.getElementById(`giftName-${person}`).value = "";
       document.getElementById(`giftPriority-${person}`).value = "";
       document.getElementById(`giftPrice-${person}`).value = "";
       document.getElementById(`giftURL-${person}`).value = "";
       document.getElementById(`giftNotes-${person}`).value = "";
+    } catch (err) {
+      console.error("Error adding gift:", err);
+      alert("Failed to add gift. Please try again.");
     }
+  }
 
-    function renderGift(person, gift) {
-      const table = document.getElementById(`giftTable-${person}`);
-      const row = document.createElement("tr");
-      const linkHTML = gift.url ? `<a href="${gift.url.startsWith('http') ? gift.url : 'https://' + gift.url}" target="_blank">View</a>` : "";
-      row.innerHTML = `
-        <td>${gift.name}</td>
-        <td>${gift.priority}</td>
-        <td>${gift.price}</td>
-        <td>${linkHTML}</td>
-        <td>${gift.notes || ""}</td>
-        <td><button onclick="removeGift(this, '${person}', '${gift.name}')">Remove</button></td>
-      `;
-      table.appendChild(row);
+  // --- Render a gift row ---
+  function renderGift(person, gift) {
+    const table = document.getElementById(`giftTable-${person}`);
+    const row = document.createElement("tr");
+    let linkHTML = "";
+    if (gift.url) {
+      const fullURL = gift.url.startsWith("http") ? gift.url : `https://${gift.url}`;
+      linkHTML = `<a href="${fullURL}" target="_blank">View</a>`;
     }
+    row.innerHTML = `
+      <td>${gift.name}</td>
+      <td>${gift.priority}</td>
+      <td>${gift.price}</td>
+      <td>${linkHTML}</td>
+      <td>${gift.notes || ""}</td>
+      <td><button onclick="removeGift('${person}', '${gift.name}', this)">Remove</button></td>
+    `;
+    table.appendChild(row);
+  }
 
-    async function removeGift(button, person, name) {
-      button.closest("tr").remove();
-      await fetch(scriptURL, {
+  // --- Remove gift ---
+  async function removeGift(person, giftName, btn) {
+    try {
+      // Remove visually
+      btn.closest("tr").remove();
+
+      // Remove from Google Sheet
+      const res = await fetch(scriptURL, {
         method: "POST",
-        body: JSON.stringify({ action: "removeGift", person, name }),
+        body: JSON.stringify({ action: "removeGift", person, name: giftName }),
       });
+      const result = await res.text();
+      console.log("Removed:", result);
+    } catch (err) {
+      console.error("Error removing gift:", err);
+      alert("Failed to remove gift. Please try again.");
     }
+  }
 
-    async function saveStocking(person) {
-      const stocking = document.getElementById(`stocking-${person}`).value.trim();
-      await fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify({ action: "saveStocking", person, stocking }),
-      });
-      alert("Stocking ideas saved!");
-    }
+  // --- Save stocking ideas ---
+  async function saveStocking(person) {
+    const stocking = document.getElementById(`stocking-${person}`).value;
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify({ action: "saveStocking", person, stocking }),
+    });
+    alert("Stocking ideas saved!");
+  }
 
-    loadData();
-  </script>
+  // --- Load all data on page load ---
+  async function loadData() {
+    const res = await fetch(`${scriptURL}?action=getData`);
+    const data = await res.json();
+    Object.keys(data).forEach(person => {
+      if (data[person].gifts) {
+        data[person].gifts.forEach(g => renderGift(person, g));
+      }
+      if (data[person].stocking && document.getElementById(`stocking-${person}`)) {
+        document.getElementById(`stocking-${person}`).value = data[person].stocking;
+      }
+    });
+  }
+
+  loadData();
+</script>
+
 </body>
 </html>
